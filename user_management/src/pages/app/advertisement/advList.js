@@ -276,7 +276,7 @@ export const Advertisement = () => {
       </div>
       <div style={{ marginLeft: 20 }}>
         <TableContainer component={Paper}>
-          <Table sx={{ width: "1100px" }} aria-label="customized table">
+          <Table sx={{ width: "1250px" }} aria-label="customized table">
             <TableHead>
               <TableRow>
                 <StyledTableCell>Id</StyledTableCell>

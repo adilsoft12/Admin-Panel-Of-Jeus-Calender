@@ -12,16 +12,17 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Box from "@mui/material/Box";
 import { useHistory } from "react-router-dom";
+import { validationSchema } from "./validate";
 
 export const AddORG = () => {
   const location = useLocation();
   const [id, setId] = useState(0);
   const [info, setInfo] = useState([]);
   const [countries, setCountries] = useState([]);
-  const [selectedcountries, setSelectedCountries] = useState('');
+  const [selectedcountries, setSelectedCountries] = useState("");
   const history = useHistory();
 
-  console.log("selectedcountries",selectedcountries)
+  console.log("selectedcountries", { selectedcountries, info });
 
   const paperStyle = {
     padding: "40px 30px 50px 25px",
@@ -30,23 +31,9 @@ export const AddORG = () => {
     align: "center",
   };
 
+  console.log("info.countryId", typeof(info.countryId) )
   const headerStyle = { margin: 0 };
 
-  const validationSchema = yup.object().shape({
-    organizationName: yup
-      .string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Required"),
-    email: yup
-      .string("Enter your email")
-      .email("Enter a valid email")
-      .required("Email is required"),
-    url: yup
-      .string()
-      .min(2, "must be more then 2 characters")
-      .required("url cannot be blank"),
-  });
   useEffect(() => {
     const tempArray = location.pathname?.split("/");
     setId(tempArray?.[2]);
@@ -61,10 +48,10 @@ export const AddORG = () => {
       `http://zewscalender-001-site1.btempurl.com/api/Organization/Get-Organization-By-Id?Id=${data}`
     );
     setInfo(result.data);
-    console.log("result.data",result.data)
-    const  ctry = result.data.countryId.toString()
-    console.log(">>>>>>Ctry", ctry)
-    setSelectedCountries(ctry)
+    console.log("result.data", result.data);
+    const ctry = result.data.countryId.toString();
+    console.log(">>>>>>Ctry", ctry);
+    setSelectedCountries(ctry);
   };
 
   const AddOrganisation = async (data) => {
@@ -72,19 +59,24 @@ export const AddORG = () => {
       "http://zewscalender-001-site1.btempurl.com/api/Organization/Add-Organization",
       data
     );
+    console.log("lisTdataSheowww", result)
     if (result.data.message === "Organization Added") {
       history.push("/organisation");
     }
   };
   const updateOrganisation = async (data) => {
-    const response = await axiosInstance.put(
-      `${API_ENDPOINTS_ORG.edit_org}`,
-      data
-    );
+    console.log("data------->", data);
+    const response = await axios.put(`http://zewscalender-001-site1.btempurl.com/api/Organization/Update-Organization`, data)
+    // const response = await axiosInstance.put(
+    //   `${API_ENDPOINTS_ORG.edit_org}`,
+    //   data
+    // );
+    console.log("ListUPdatedData", response);
     if (response) {
       history.push("/organisation");
     }
   };
+
   useEffect(() => {
     getALLlist();
   }, []);
@@ -96,42 +88,13 @@ export const AddORG = () => {
     setCountries(result.data);
   };
 
-  // async function makePostRequest(queryObj) {
-
-  //   try {
-  //     const data = {
-  //       id: Number(id || 0),
-  //       organizationName: queryObj?.organizationName,
-  //       email: queryObj?.email,
-  //       country: queryObj?.country,
-  //       organizationAddress: queryObj?.organizationAddress,
-  //       url: queryObj?.url,
-  //       contactPerson: queryObj?.contactPerson,
-  //       mobileNo: queryObj?.mobileNo,
-
-  //     };
-  //     if (id) {
-
-  //       const response = await axiosInstance.put(`${API_ENDPOINTS_ORG.edit_org}`, data);
-  //       console.log(response);
-  //     }
-  //     else {
-  //       const response = await axiosInstance.post(API_ENDPOINTS_ORG.add_org, data);
-  //       console.log(response.data, "response");
-  //     }
-
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
-
   console.log("infocountryName>>>", selectedcountries);
 
   const formik = useFormik({
     initialValues: {
       organizationName: "",
       email: "",
-      country: "",
+      countryId: null,
       organizationAddress: "",
       url: "",
       contactPerson: "",
@@ -141,7 +104,7 @@ export const AddORG = () => {
     onSubmit: (values) => {
       const queryObj = {
         id: Number(id || 0),
-        countryId: selectedcountries,
+        countryId: Number(selectedcountries || info.countryId) ,
         organizationName: values.organizationName,
         organizationAddress: values.organizationAddress,
         url: values.url,
@@ -149,7 +112,7 @@ export const AddORG = () => {
         email: values.email,
         mobileNo: values.mobileNo,
       };
-
+      console.log("DataUsdllaa", queryObj);
       if (id) {
         updateOrganisation(queryObj);
       } else {
@@ -173,16 +136,14 @@ export const AddORG = () => {
     }
   }, [info]);
 
-
-  console.log("VAlues>>>",{ values,selectedcountries})
+  console.log("VAlues>>>", { values, selectedcountries });
   return (
     <Grid>
       <Paper elevation={0} style={paperStyle}>
-        <Grid align="center">
+        <Grid align="center" sx={{ mt: 3 }}>
           <h2 style={headerStyle}>{id ? "Update" : "Add New"} Organization</h2>
         </Grid>
-        <br />
-        <br />
+
         <form onSubmit={handleSubmit}>
           <TextField
             fullWidth
@@ -215,9 +176,9 @@ export const AddORG = () => {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={selectedcountries} 
+                value={selectedcountries}
                 label="Country"
-                onChange={(e) => setSelectedCountries( e.target.value)}
+                onChange={(e) => setSelectedCountries(e.target.value)}
               >
                 {countries &&
                   countries.map((item) => {

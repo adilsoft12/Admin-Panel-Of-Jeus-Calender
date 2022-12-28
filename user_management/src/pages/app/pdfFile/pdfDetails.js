@@ -8,7 +8,8 @@ import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Box, height } from "@mui/system";
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import { AppConainer } from "../../../components";
+
 export function Detail() {
   const history = useHistory();
   const [id, setId] = useState([]);
@@ -44,66 +45,67 @@ export function Detail() {
   }
 
   return (
-    <Grid container spacing={2}>
-      <Grid
-        item
-        xs={12}
-        md={12}
-        sx={{
-          height: "100%",
-          margin: { sx: "5px", lg: "0" },
-          background: "black",
-        }}
+    <AppConainer>
+    <Paper elevation={3} sx={{marginLeft:"200px"}}>
+    <Grid
+    style={{ display: "flex", justifyContent: "center", marginTop: "60px" }}
+  >
+    <Grid
+      style={{
+        // backgroundColor: "#C3C6E2",
+        backgroundSize: "cover",
+        textAlign: "start",
+        // paddingTop: "20px",
+        paddingBottom: "20px",
+        paddingLeft: "19px",
+        paddingRight: "10px",
+      }}
+    >
+      <h1  className="titr-font" style={{ textAlign: "center" }}> PDF Detail</h1>
+     
+      <Typography className="BBCNassim-font" sx={{ fontSize: 20,  }}>
+      <a style={{fontWeight:"bold",marginRight:"45px"}}>NoOfPages</a>: {info.noOfPages}
+      </Typography>
+      <Typography
+      className="BBCNassim-font"
+        sx={{ fontSize: 20,  marginTop: "5px" }}
       >
-        <Grid item>
-          <Item>
-       <div style={{display:'flex',justifyContent:'space-between',marginBottom:10}}>
-       <div>
-           <button 
-               style={{border:'none',backgroundColor: 'transparent'}}
-                type="submit" onClick={() => history.push("/pdfdetails")}>
-                <KeyboardArrowLeftIcon sx={{color:'black'}}/>
-              </button>
-           </div>
-       <div >
-        <h1 style={headerStyle} className="titr-font">
-              PDF Detail
-            </h1>
-            </div>
-            <div></div>
-         
-       </div>
-            <div style={{ margin: "10px 0", marginTop: 50 }}>
-          
-              <Typography
-                className="BBCNassim-font"
-                sx={{ fontSize: 25, fontWeight: "regular" }}
-              >
-                NoOfPages: {info.noOfPages}
-              </Typography>
-              <Typography
-                className="BBCNassim-font"
-                sx={{ fontSize: 25, fontWeight: "regular" }}
-              >
-                FileDescription: {info.fileDescription}
-              </Typography>
-              <Typography
-                className="BBCNassim-font"
-                sx={{ fontSize: 25, fontWeight: "regular" }}
-              >
-                FilePath:{info.filePath}
-              </Typography>
-              <Typography
-                className="BBCNassim-font"
-                sx={{ fontSize: 25, fontWeight: "regular" }}
-              >
-                PublishedYear: {info.publishedYear}
-              </Typography>
-             
-            </div>
-          </Item>
-        </Grid>
-      </Grid>
+         <a style={{fontWeight:"bold",marginRight:"10px"}}>FileDescription</a>: {info.fileDescription}
+      </Typography>
+      <Typography
+      className="BBCNassim-font"
+        sx={{ fontSize: 20,  marginTop: "5px" }}
+      >
+         <a style={{fontWeight:"bold",marginRight:"69px"}}>FilePath</a>: {info.filePath}
+      </Typography>
+      <Typography
+      className="BBCNassim-font"
+        sx={{ fontSize: 20,  marginTop: "5px" }}
+      >
+         <a style={{fontWeight:"bold",marginRight:"17px"}}>PublishedYear</a>: {info.publishedYear}
+      </Typography>
+      {/* <Typography sx={{ fontSize: 20, fontWeight: 'regular' }}>fileupload: {info.fileupload}</Typography> */}
+
+      <Button
+        sx={{
+          mt: 3,
+          backgroundColor: "#3945b9",
+          color: "white",
+          marginLeft: "0px",
+          marginBottom: "20px",
+        }}
+        type="submit"
+        variant="contained"
+        align="center"
+        onClick={() => history.push("/pdfdetails")}
+      >
+        Go Back
+      </Button>
     </Grid>
+  </Grid>
+    </Paper>
+   
+  </AppConainer>
   );
 }
+   

@@ -11,6 +11,13 @@ import { AddPdf } from '../pages/app/pdfFile/addpdf';
 import { PDF, PdfList } from '../pages/app/pdfFile/pdflist';
 import { DetailAdv } from '../pages/app/advertisement/advDetail';
 import { Detail } from '../pages/app/pdfFile/pdfDetails';
+import { EventList} from '../pages/app/event/eventlist';
+import {AddEvent} from '../pages/app/event/addevent';
+import {EventDetail} from '../pages/app/event/eventDetail';
+import {Addcontact} from '../pages/app/contact/addcontact';
+import {ContactDetail} from '../pages/app/contact/contactDetail';
+import { ContactList} from '../pages/app/contact/contactList';
+
 // import {addorg} from '../pages/app/organisation/addorg';
 export const CommonRouter = () => {
     // const location = useLocation();
@@ -94,6 +101,15 @@ export const CommonRouter = () => {
                 <Route path='/Addpdf/:id' component={AddPdf} />
                 <Route exact path='/pdfdetails' component={PdfList} />
                 <Route exact path='/detail/:id' component={Detail} />
+                <Route exact path='/event' component={EventList} />
+                <Route exact path='/addevent' component={AddEvent} />
+                <Route exact path='/addevent/:id' component={AddEvent} />
+                <Route exact path='/eventDetail/:id' component={EventDetail} />
+                <Route exact path='/addcontact' component={Addcontact} />
+                <Route exact path='/addcontact/:id' component={Addcontact} />
+                <Route exact path='/contactDetail/:id' component={ContactDetail} />
+                <Route exact path='/contact' component={ContactList} />
+
             </Switch>
         </BrowserRouter>
 

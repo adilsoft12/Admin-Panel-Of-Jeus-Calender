@@ -12,5 +12,5 @@ export { Permission } from './app/permission';
 export {CreateBusinessForm} from './app/createBusinessForm'
 export {Organisation} from './app/organisation';
 export {Advertisement} from './app/advertisement/advList';
-
-
+export {EventList} from './app/event/eventlist';
+export { ContactList} from './app/contact/contactList';

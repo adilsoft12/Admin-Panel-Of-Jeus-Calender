@@ -1,7 +1,14 @@
-.custom-file-label.rounded-pill {
-    border-radius: 50rem;
+/* @media all and(min-width: 1200px) {
+  .add-theme {
+    width: "900px";
+    margin-left: "270px";
+    padding-top: "5px";
+    background-color: red;
+    padding:"5px 10px 0px 10px" ;
   }
-  
-  .custom-file-label.rounded-pill::after {
-    border-radius: 0 50rem 50rem 0;
-  }
+}
+
+.add-theme {
+  width: "900px";
+  padding:"5px 10px 0px 10px" ;
+} */

@@ -157,24 +157,7 @@ export const PdfList = () => {
 
     return (
       <div className={classes.root}>
-        <IconButton
-          onClick={handleFirstPageButtonClick}
-          disabled={page === 0}
-          aria-label="first page"
-        >
-          {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
-        </IconButton>
-        <IconButton
-          onClick={handleBackButtonClick}
-          disabled={page === 0}
-          aria-label="previous page"
-        >
-          {theme.direction === "rtl" ? (
-            <KeyboardArrowRight />
-          ) : (
-            <KeyboardArrowLeft />
-          )}
-        </IconButton>
+      
         <IconButton
           onClick={handleNextButtonClick}
           disabled={page >= Math.ceil(count / rowsPerPage) - 1}
@@ -224,7 +207,7 @@ export const PdfList = () => {
       </div>
       <div style={{ marginLeft: 20 }}>
         <TableContainer component={Paper}>
-          <Table sx={{ width: "1100px" }} aria-label="customized table">
+          <Table sx={{ width: "1250px" }} aria-label="customized table">
             <TableHead>
               <TableRow>
                 <StyledTableCell>Id</StyledTableCell>

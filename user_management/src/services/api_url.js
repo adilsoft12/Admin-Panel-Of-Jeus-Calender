@@ -30,3 +30,19 @@ export const API_ENDPOINTS_ADV = {
    delete_file:"File/Delete-File ",
 
 };
+
+export const API_ENDPOINTS_Event={
+   upload_file:"/ReligiousEvent/add",
+   update_file:"/ReligiousEvent/edit",
+   get_id_file:"/ReligiousEvent/GetBy-Id",
+   get_all_files:"/ReligiousEvent/GetAll",
+   delete_file:"/ReligiousEvent/Delete ",
+}
+
+export const  API_ENDPOINTS_Contact={
+   upload_file:"/Contact/Add",
+   update_file:"/Contact/Edit",
+   get_id_file:"/api/Contact/GetBy-ID",
+   get_all_files:"/Contact/GetAll",
+   delete_file:"Contact/Delete?id=1 ",
+}

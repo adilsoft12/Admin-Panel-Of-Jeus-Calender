@@ -23,3 +23,29 @@ code {
   font-weight: 500;
 }
 
+@media(max-width:800px){
+
+  .main-d1{
+    background-color: brown;
+    width: 100%;
+    padding: 5px 10px 0px 10px;
+    
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    }
+    .main-d {
+      width: 100%;
+      padding: 5px 10px 0px 10px;
+      
+    }
+    
+    
