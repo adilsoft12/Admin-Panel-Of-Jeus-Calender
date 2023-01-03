@@ -4,6 +4,10 @@ export const validationSchema = yup.object().shape({
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
+    organizationNamePersian: yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
     email: yup
       .string("Enter your email")
       .email("Enter a valid email")

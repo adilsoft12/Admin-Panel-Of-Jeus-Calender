@@ -114,7 +114,7 @@ export const PdfList = () => {
     try {
       axiosInstance
         .delete(
-          `http://zewscalender-001-site1.btempurl.com/api/File/DeleteFile?Id=${id}`
+          `http://jewcalendar-001-site1.btempurl.com/api/File/DeleteFile?Id=${id}`
         )
         .then((res) => {
           if (res.data.message === "File Deleted") {
@@ -202,7 +202,7 @@ export const PdfList = () => {
           }}
           onClick={() => history.push("/addpdf")}
         >
-          ADD PDF
+          ADD IRANIAN CALENDAR
         </Button>
       </div>
       <div style={{ marginLeft: 20 }}>

@@ -44,7 +44,7 @@ export const Addcontact = () => {
 
   const fetchDetails = async (data) => {
     const result = await axios.post(
-      `http://zewscalender-001-site1.btempurl.com/api/Contact/GetBy-ID?Id=${data}`
+      `http://jewcalendar-001-site1.btempurl.com/api/Contact/GetBy-ID?Id=${data}`
     );
     setInfo(result.data);
     console.log("result.data",result.data)
@@ -54,7 +54,7 @@ export const Addcontact = () => {
   const AddCnt = async (data) => {
     // console.log({data})
     const result = await axios.post(
-      "http://zewscalender-001-site1.btempurl.com/api/Contact/Add",
+      "http://jewcalendar-001-site1.btempurl.com/api/Contact/Add",
       data    
     );
     console.log("result.data",result.data);

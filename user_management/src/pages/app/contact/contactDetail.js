@@ -33,7 +33,7 @@ export const ContactDetail = () => {
   async function getDetail(data) {
     try {
       const result = await axios.post(
-        `http://zewscalender-001-site1.btempurl.com/api/Contact/GetBy-ID?Id=${data}`
+        `http://jewcalendar-001-site1.btempurl.com/api/Contact/GetBy-ID?Id=${data}`
       );
       setInfo(result.data);
     } catch (error) {}

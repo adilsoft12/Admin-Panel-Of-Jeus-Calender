@@ -33,7 +33,7 @@ export function DetailOrg() {
   async function getDetail(data) {
     try {
       const result = await axios.get(
-        `http://zewscalender-001-site1.btempurl.com/api/Organization/Get-Organization-By-Id?Id=${data}`
+        `http://jewcalendar-001-site1.btempurl.com/api/Organization/Get-Organization-By-Id?Id=${data}`
       );
       setInfo(result.data);
     console.log("result-------------->",result.data)
@@ -63,7 +63,10 @@ export function DetailOrg() {
         </h1>
 
         <Typography className="BBCNassim-font" sx={{ fontSize: 20, }}>
-        <a style={{fontWeight:"bold",marginRight:"29px"}}>OrganizationName</a>: {info.organizationName}
+        <a style={{fontWeight:"bold",marginRight:"29px"}}>OrganizationName</a>: {info.organizationNameEnglish}
+        </Typography>
+        <Typography className="BBCNassim-font" sx={{ fontSize: 20, }}>
+        <a style={{fontWeight:"bold",marginRight:"29px"}}>OrganizationNamePersian</a>: {info.organizationNamePersian}
         </Typography>
         <Typography className="BBCNassim-font" sx={{ fontSize: 20, }}>
         <a style={{fontWeight:"bold",marginRight:"143px"}}>Email</a>: {info.email}
@@ -96,7 +99,7 @@ export function DetailOrg() {
           type="submit"
           variant="contained"
           align="center"
-          onClick={() => history.push("/organisation")}
+          onClick={() => history.push("/Organization")}
         >
           Go Back
         </Button>

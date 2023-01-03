@@ -38,7 +38,7 @@ export function DetailAdv() {
   async function getDetail(data) {
     try {
       const result = await axios.get(
-        `http://zewscalender-001-site1.btempurl.com/api/Advertisement/Get-Advertisement-By-Id?Id=${data}`
+        `http://jewcalendar-001-site1.btempurl.com/api/Advertisement/Get-Advertisement-By-Id?Id=${data}`
       );
       setInfo(result.data);
     } catch (error) {}

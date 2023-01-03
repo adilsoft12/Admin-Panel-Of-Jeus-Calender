@@ -115,7 +115,7 @@ export const EventList = () => {
     try {
       axiosInstance
         .delete(
-          `http://zewscalender-001-site1.btempurl.com/api/ReligiousEvent/Delete?id=${id}`
+          `http://jewcalendar-001-site1.btempurl.com/api/ReligiousEvent/Delete?id=${id}`
         )
         .then((res) => {
           if (res.data.message ==="Deleted") {
@@ -221,7 +221,7 @@ export const EventList = () => {
           }}
           onClick={() => history.push("/AddEvent")}
         >
-          ADD EVENT
+          ADD JEWS EVENT
         </Button>
       
       </div>
