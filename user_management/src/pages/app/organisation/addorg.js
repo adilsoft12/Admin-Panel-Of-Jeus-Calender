@@ -127,7 +127,6 @@ console.log("tempArray------>",tempArray);
         updateOrganisation(queryObj);
       } else {
         AddOrganisation(queryObj);
-        console.log("first")
       }
     },
   });
