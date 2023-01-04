@@ -33,7 +33,7 @@ export function EventDetail() {
   async function getDetail(data) {
     try {
       const result = await axios.get(
-        `http://zewscalender-001-site1.btempurl.com/api/ReligiousEvent/GetBy-Id?Id=${data}`
+        `http://jewcalendar-001-site1.btempurl.com/api/ReligiousEvent/GetBy-Id?Id=${data}`
       );
       setInfo(result.data);
     } catch (error) {}
@@ -56,7 +56,7 @@ export function EventDetail() {
           paddingRight: "10px",
         }}
       >
-        <h1  className="titr-font" style={{ textAlign: "center" }}> Event Detail </h1>
+        <h1  className="titr-font" style={{ textAlign: "center" }}>Jews Event Detail </h1>
 
         <Typography className="BBCNassim-font" sx={{ fontSize: 20,  }}>
         <a style={{fontWeight:"bold",marginRight:"10px"}}>EventName</a>: {info.eventName}

@@ -33,7 +33,7 @@ export function DetailOrg() {
   async function getDetail(data) {
     try {
       const result = await axios.get(
-        `http://zewscalender-001-site1.btempurl.com/api/Organization/Get-Organization-By-Id?Id=${data}`
+        `http://jewcalendar-001-site1.btempurl.com/api/Organization/Get-Organization-By-Id?Id=${data}`
       );
       setInfo(result.data);
     console.log("result-------------->",result.data)
@@ -52,9 +52,10 @@ export function DetailOrg() {
           backgroundSize: "cover",
           textAlign: "start",
           paddingTop: "50px",
-          paddingBottom: "50px",
-          paddingLeft: "40px",
-          paddingRight: "40px",
+          padding:'20px 25px'
+          // paddingBottom: "50px",
+          // paddingLeft: "40px",
+          // paddingRight: "40px",
         }}
       >
         <h1 className="titr-font" style={{ headerStyle, marginLeft: "10px" ,textAlign:"center"}}>
@@ -63,25 +64,28 @@ export function DetailOrg() {
         </h1>
 
         <Typography className="BBCNassim-font" sx={{ fontSize: 20, }}>
-        <a style={{fontWeight:"bold",marginRight:"29px"}}>OrganizationName</a>: {info.organizationName}
+        <a style={{fontWeight:"bold",marginRight:"93px"}}>OrganizationName</a>: {info.organizationNameEnglish}
         </Typography>
         <Typography className="BBCNassim-font" sx={{ fontSize: 20, }}>
-        <a style={{fontWeight:"bold",marginRight:"143px"}}>Email</a>: {info.email}
+        <a style={{fontWeight:"bold",marginRight:"29px"}}>OrganizationNamePersian</a>: {info.organizationNamePersian}
         </Typography>
         <Typography className="BBCNassim-font" sx={{ fontSize: 20, }}>
-          <a style={{fontWeight:"bold",marginRight:"123px"}}>Country</a>: {info.countryName}
+        <a style={{fontWeight:"bold",marginRight:"211px"}}>Email</a>: {info.email}
+        </Typography>
+        <Typography className="BBCNassim-font" sx={{ fontSize: 20, }}>
+          <a style={{fontWeight:"bold",marginRight:"190px"}}>Country</a>: {info.countryName}
         </Typography>
         <Typography className="BBCNassim-font" sx={{ fontSize: 20,  }}>
-        <a style={{fontWeight:"bold",marginRight:"10px"}}>OrganizationAddress</a>:{info.organizationAddress}
+        <a style={{fontWeight:"bold",marginRight:"76px"}}>OrganizationAddress</a>:{info.organizationAddress}
         </Typography>
         <Typography className="BBCNassim-font" sx={{ fontSize: 20, }}>
-        <a style={{fontWeight:"bold",marginRight:"168px"}}>Url</a>: {info.url}
+        <a style={{fontWeight:"bold",marginRight:"235px"}}>Url</a>: {info.url}
         </Typography>
         <Typography className="BBCNassim-font" sx={{ fontSize: 20, }}>
-        <a style={{fontWeight:"bold",marginRight:"68px"}}>ContactPerson</a>: {info.contactPerson}
+        <a style={{fontWeight:"bold",marginRight:"134px"}}>ContactPerson</a>: {info.contactPerson}
         </Typography>
         <Typography className="BBCNassim-font" sx={{ fontSize: 20, }}>
-        <a style={{fontWeight:"bold",marginRight:"110px"}}>MobileNo</a>: {info.mobileNo}
+        <a style={{fontWeight:"bold",marginRight:"179px"}}>MobileNo</a>: {info.mobileNo}
         </Typography>
 
         <Button
@@ -96,7 +100,7 @@ export function DetailOrg() {
           type="submit"
           variant="contained"
           align="center"
-          onClick={() => history.push("/organisation")}
+          onClick={() => history.push("/Organization")}
         >
           Go Back
         </Button>

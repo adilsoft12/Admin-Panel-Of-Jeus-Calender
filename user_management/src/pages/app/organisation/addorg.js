@@ -22,6 +22,8 @@ export const AddORG = () => {
   const [selectedcountries, setSelectedCountries] = useState("");
   const history = useHistory();
 
+  console.log("countryList", countries)
+
   console.log("selectedcountries", { selectedcountries, info });
 
   const paperStyle = {
@@ -31,7 +33,7 @@ export const AddORG = () => {
     align: "center",
   };
 
-  console.log("info.countryId", typeof(info.countryId) )
+  // console.log("info.countryId", typeof(info.countryId) )
   const headerStyle = { margin: 0 };
 
   useEffect(() => {
@@ -41,11 +43,12 @@ export const AddORG = () => {
     if (tempArray?.[2]) {
       fetchDetails(tempArray?.[2]);
     }
-  }, []);
+console.log("tempArray------>",tempArray);
 
+  }, []);
   const fetchDetails = async (data) => {
     const result = await axios.get(
-      `http://zewscalender-001-site1.btempurl.com/api/Organization/Get-Organization-By-Id?Id=${data}`
+      `http://jewcalendar-001-site1.btempurl.com/api/Organization/Get-Organization-By-Id?Id=${data}`
     );
     setInfo(result.data);
     console.log("result.data", result.data);
@@ -56,24 +59,24 @@ export const AddORG = () => {
 
   const AddOrganisation = async (data) => {
     const result = await axios.post(
-      "http://zewscalender-001-site1.btempurl.com/api/Organization/Add-Organization",
+      "http://jewcalendar-001-site1.btempurl.com/api/Organization/Add-Organization",
       data
     );
     console.log("lisTdataSheowww", result)
     if (result.data.message === "Organization Added") {
-      history.push("/organisation");
+      history.push("/organization");
     }
   };
   const updateOrganisation = async (data) => {
     console.log("data------->", data);
-    const response = await axios.put(`http://zewscalender-001-site1.btempurl.com/api/Organization/Update-Organization`, data)
+    const response = await axios.put(`http://jewcalendar-001-site1.btempurl.com/api/Organization/Update-Organization`, data)
     // const response = await axiosInstance.put(
     //   `${API_ENDPOINTS_ORG.edit_org}`,
     //   data
     // );
     console.log("ListUPdatedData", response);
     if (response) {
-      history.push("/organisation");
+      history.push("/organization");
     }
   };
 
@@ -82,17 +85,22 @@ export const AddORG = () => {
   }, []);
 
   const getALLlist = async () => {
-    const result = await axios.post(
-      `http://zewscalender-001-site1.btempurl.com/api/Country/GetAll`
+    const result = await axios.get(
+      `http://jewcalendar-001-site1.btempurl.com/api/Organization/Get-All-Organization-with-Country`
     );
+
+    console.log("listData>>>>", result)
     setCountries(result.data);
+    console.log("selectedcountry-------->",result.data)
   };
+
 
   console.log("infocountryName>>>", selectedcountries);
 
   const formik = useFormik({
     initialValues: {
-      organizationName: "",
+      organizationNameEnglish: "",
+      organizationNamePersian:"",
       email: "",
       countryId: null,
       organizationAddress: "",
@@ -104,8 +112,10 @@ export const AddORG = () => {
     onSubmit: (values) => {
       const queryObj = {
         id: Number(id || 0),
-        countryId: Number(selectedcountries || info.countryId) ,
-        organizationName: values.organizationName,
+        // countryId: Number(selectedcountries || info.countryId) ,
+        countryId: selectedcountries,
+        organizationNameEnglish: values.organizationNameEnglish,
+        organizationNamePersian: values.organizationNamePersian,
         organizationAddress: values.organizationAddress,
         url: values.url,
         contactPerson: values.contactPerson,
@@ -117,6 +127,7 @@ export const AddORG = () => {
         updateOrganisation(queryObj);
       } else {
         AddOrganisation(queryObj);
+        //
       }
     },
   });
@@ -126,9 +137,10 @@ export const AddORG = () => {
 
   useEffect(() => {
     if (info) {
-      setFieldValue("organizationName", info.organizationName);
+      setFieldValue("organizationNameEnglish", info.organizationNameEnglish);
+      setFieldValue("organizationNamePersian", info.organizationNamePersian);
       setFieldValue("email", info.email);
-      setFieldValue("country", info.countryName);
+      setFieldValue("countryName", info.countryName);
       setFieldValue("organizationAddress", info.organizationAddress);
       setFieldValue("url", info.url);
       setFieldValue("contactPerson", info.contactPerson);
@@ -148,14 +160,27 @@ export const AddORG = () => {
           <TextField
             fullWidth
             sx={{ mt: 3 }}
-            id="organizationName"
-            name="organizationName"
+            id="organizationNameEnglish"
+            name="organizationNameEnglish"
             label="Organization Name"
             placeholder="Enter your Organization Name"
-            value={values.organizationName}
-            onChange={handleChange("organizationName")}
-            error={touched.organizationName && Boolean(errors.organizationName)}
-            helperText={touched.organizationName && errors.organizationName}
+            value={values.organizationNameEnglish}
+            onChange={handleChange("organizationNameEnglish")}
+            error={touched.organizationNameEnglish && Boolean(errors.organizationNameEnglish)}
+            helperText={touched.organizationNameEnglish && errors.organizationNameEnglish}
+          />
+
+           <TextField
+            fullWidth
+            sx={{ mt: 3 }}
+            id="organizationNamePersian"
+            name="organizationNamePersian"
+            label="Organization Nam ePersian "
+            placeholder="Enter your Organization Name"
+            value={values.organizationNamePersian}
+            onChange={handleChange("organizationNamePersian")}
+            error={touched.organizationNamePersian && Boolean(errors.organizationNamePersian)}
+            helperText={touched.organizationNamePersian && errors.organizationNamePersian}
           />
 
           <TextField
@@ -254,7 +279,7 @@ export const AddORG = () => {
             variant="contained"
             color="primary"
             align="center"
-            onClick={() => history.push("/organisation")}
+            onClick={() => history.push("/organization")}
           >
             Go Back
           </Button>

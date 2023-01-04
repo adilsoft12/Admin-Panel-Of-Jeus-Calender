@@ -42,7 +42,7 @@ export const AddADV = () => {
 
   const fetchDetails = async (data) => {
     const result = await axios.get(
-      `http://zewscalender-001-site1.btempurl.com/api/Advertisement/Get-Advertisement-By-Id?Id=${data}`
+      `http://jewcalendar-001-site1.btempurl.com/api/Advertisement/Get-Advertisement-By-Id?Id=${data}`
     );
     setInfo(result.data);
     console.log("userResponse for edit", result.data);
@@ -145,7 +145,6 @@ export const AddADV = () => {
     console.log("eventList", event);
     getBase64(event.currentTarget.files[0], (result) => {
       setFieldValue("imageFile", result.split(",")[1]);
-      console.log("checklist", result);
       setSelectedImage(result);
     });
   };

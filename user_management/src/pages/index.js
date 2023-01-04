@@ -10,7 +10,9 @@ export { Setting } from './app/setting'
 export { AssignPermission } from './app/assignPermission';
 export { Permission } from './app/permission';
 export {CreateBusinessForm} from './app/createBusinessForm'
-export {Organisation} from './app/organisation';
 export {Advertisement} from './app/advertisement/advList';
 export {EventList} from './app/event/eventlist';
 export { ContactList} from './app/contact/contactList';
+export {BannerList} from './app/banner/bannerlist';
+export {Organization} from './app/organisation/index';
+export {PdfList} from './app/pdfFile/pdflist';

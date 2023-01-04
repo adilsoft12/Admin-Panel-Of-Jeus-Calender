@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { Advertisement, Organisation, AssignRole, DashBoard, ForgotPassword, Login, Report, Screen, Userlogin, AssignPermission, Permission, UserManagement, Setting, CreateBusinessForm } from '../pages';
+import { Advertisement, AssignRole, DashBoard, ForgotPassword, Login, Report, Screen, Userlogin, AssignPermission, Permission, UserManagement, Setting, CreateBusinessForm } from '../pages';
 import { PrivateRoutes } from './PrivateRoutes';
 import { useUserData } from '../hooks/useUserData';
 import { createBrowserHistory } from 'history';
+import { Organization } from '../pages/app/organisation/index';
 import { AddORG } from '../pages/app/organisation/addorg';
 import { AddADV } from '../pages/app/advertisement/addAdv';
 import { DetailOrg } from '../pages/app/organisation/detail';
@@ -17,6 +18,9 @@ import {EventDetail} from '../pages/app/event/eventDetail';
 import {Addcontact} from '../pages/app/contact/addcontact';
 import {ContactDetail} from '../pages/app/contact/contactDetail';
 import { ContactList} from '../pages/app/contact/contactList';
+import { BannerList } from '../pages/app/banner/bannerlist';
+import { AddBanner } from '../pages/app/banner/addbanner';
+import { BannerDetail } from '../pages/app/banner/bannerdetail';
 
 // import {addorg} from '../pages/app/organisation/addorg';
 export const CommonRouter = () => {
@@ -82,7 +86,6 @@ export const CommonRouter = () => {
 
                 <Route exact path='/Roles' component={AssignRole} />
                 <Route exact path='/screen' component={Screen} />
-                <Route exact path='/organisation' component={Organisation} />
                 <Route exact path='/advertisement' component={Advertisement} />
                 <Route exact path='/Userlogin' component={Userlogin} />
                 <Route exact path='/ForgotPassword' component={ForgotPassword} />
@@ -91,6 +94,7 @@ export const CommonRouter = () => {
                 <Route exact path='./' component={Login} />
                 <Route exact path='/assignPermission' component={AssignPermission} />
                 <Route exact path='/CreateBusinessForm' component={CreateBusinessForm} />
+                <Route exact path='/Organization' component={Organization} />
                 <Route exact path='/AddORG' component={AddORG} />
                 <Route path="/AddORG/:id" component={AddORG} />
                 <Route path="/DetailORG/:id" component={DetailOrg} />
@@ -99,7 +103,7 @@ export const CommonRouter = () => {
                 <Route path="/DetailAdv/:id" component={DetailAdv} />
                 <Route exact path="/addpdf" component={AddPdf} />
                 <Route path='/Addpdf/:id' component={AddPdf} />
-                <Route exact path='/pdfdetails' component={PdfList} />
+                <Route exact path='/calenderdetails' component={PdfList} />
                 <Route exact path='/detail/:id' component={Detail} />
                 <Route exact path='/event' component={EventList} />
                 <Route exact path='/addevent' component={AddEvent} />
@@ -109,6 +113,10 @@ export const CommonRouter = () => {
                 <Route exact path='/addcontact/:id' component={Addcontact} />
                 <Route exact path='/contactDetail/:id' component={ContactDetail} />
                 <Route exact path='/contact' component={ContactList} />
+                <Route exact path='/banner' component={BannerList} />
+                <Route exact path='/AddBanner' component={AddBanner} />
+                <Route exact path='/AddBanner/:id' component={AddBanner} />
+                <Route exact path='/BannerDetail/:id' component={BannerDetail} />
 
             </Switch>
         </BrowserRouter>

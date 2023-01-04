@@ -149,7 +149,7 @@ export const Advertisement = () => {
     try {
       axiosInstance
         .delete(
-          `http://zewscalender-001-site1.btempurl.com/api/Advertisement/Delete-Advertisement?Id=${id}`
+          `http://jewcalendar-001-site1.btempurl.com/api/Advertisement/Delete-Advertisement?Id=${id}`
         )
         .then((res) => {
           if (res.data.message === "Ad Deleted") {

@@ -12,7 +12,7 @@ import { APP_CONFIG } from './utils/config';
 import { Router } from './navigation';
 import { SnackbarProvider } from 'notistack';
 import Zoom from '@material-ui/core/Zoom';
-import history from 'connect-history-api-fallback'
+// import history from 'connect-history-api-fallback'
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 

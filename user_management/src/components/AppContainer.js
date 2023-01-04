@@ -1,4 +1,4 @@
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import Avatar from "@material-ui/core/Avatar";
@@ -43,6 +43,13 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { LanguageSelect } from "./LanguageSelect";
 import { useUserData } from "../hooks/useUserData";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import SendIcon from "@mui/icons-material/Send";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import StarBorder from "@mui/icons-material/StarBorder";
+import ListItemButton from "@mui/material/ListItemButton";
+import Collapse from "@mui/material/Collapse";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -177,7 +184,6 @@ export const AppConainer = ({
     (state) => state.screenReducer.screensbyRole
   );
 
- 
   const getTheme = useSelector((state) => state.customThemeReducer.newTheme);
   const userDetailSelector = useSelector(
     (state) => state.userReducer.userDetail
@@ -195,7 +201,8 @@ export const AppConainer = ({
   const userID = useUserData();
   const userData = useUserData();
   const [forceRender, setForceRender] = React.useState(false);
-
+  const [openDarwar, setOpenDarwar] = React.useState(false);
+  const [jwestabOpen, setjwestabopen] = React.useState(false);
 
   const darkTheme = createMuiTheme({
     palette: {
@@ -232,316 +239,411 @@ export const AppConainer = ({
     } else {
       dispatch(setCustomTheme("light"));
     }
-  }
-    const handleDrawerOpen = () => {
-      setOpen(true);
-    };
-    const handleDrawerClose = () => {
-      setOpen(false);
-    };
+  };
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
-    const handleClick = (event) => {
-      setMenu(event.currentTarget);
-    };
+  const handleClick = (event) => {
+    setMenu(event.currentTarget);
+  };
 
-    const handleClosemenu = () => {
-      setMenu(null);
-    };
+  const handleClosemenu = () => {
+    setMenu(null);
+  };
 
-    const userlogout = async () => {
-      const token = window.localStorage.getItem("token");
-      const data = {
-        id: parseInt(userID.id),
-      };
-      try {
-        const response = await fetch(
-          `http://172.119.151.139:80/api/UserLogin/logout/${data.id}`,
-          {
-            // const response = await fetch(`https://localhost:44308/api/UserLogin/logout/${data.id}`, {
-            method: "POST",
-            headers: {
-              CompanyId: 1,
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              Authorization: token ? `Bearer ${token}` : ``,
-            },
-            body: data ? JSON.stringify(data) : null,
-          }
-        );
-        console.log({ response });
-        return response;
-      } catch (error) {
-        return error;
-      }
+  const userlogout = async () => {
+    const token = window.localStorage.getItem("token");
+    const data = {
+      id: parseInt(userID.id),
     };
-
-    const onLanguageClick = async ({ item }) => {
-      setForceRender((s) => !s);
-      const token = window.localStorage.getItem("token");
-      //   if (userData === null) return;
-      const data = {
-        lang_id: item.lang_id,
-        user_id: userData.id,
-      };
-      const result = await dispatch(languageUserUpdateThunk({ data, token }));
-      if (result.payload === "Language Updated") {
-        const user = await fetchUserData();
-        if (user !== null && user !== undefined) {
-          const langId = user.payload?.langId;
-          fetchFields(langId);
+    try {
+      const response = await fetch(
+        `http://172.119.151.139:80/api/UserLogin/logout/${data.id}`,
+        {
+          // const response = await fetch(`https://localhost:44308/api/UserLogin/logout/${data.id}`, {
+          method: "POST",
+          headers: {
+            CompanyId: 1,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: token ? `Bearer ${token}` : ``,
+          },
+          body: data ? JSON.stringify(data) : null,
         }
-        if (item.lang_orientation === "RTL") {
-          setZIndex(true);
-        } else {
-          setZIndex(false);
-        }
-      }
+      );
+      console.log({ response });
+      return response;
+    } catch (error) {
+      return error;
+    }
+  };
+
+  const onLanguageClick = async ({ item }) => {
+    setForceRender((s) => !s);
+    const token = window.localStorage.getItem("token");
+    //   if (userData === null) return;
+    const data = {
+      lang_id: item.lang_id,
+      user_id: userData.id,
     };
-
-    const fetchUserData = async () => {
-      if (userData !== null) {
-        const result = await dispatch(
-          getUserDataByIdThunk({ id: userData.id })
-        );
-        return result;
+    const result = await dispatch(languageUserUpdateThunk({ data, token }));
+    if (result.payload === "Language Updated") {
+      const user = await fetchUserData();
+      if (user !== null && user !== undefined) {
+        const langId = user.payload?.langId;
+        fetchFields(langId);
       }
-      //   return null;
-    };
+      if (item.lang_orientation === "RTL") {
+        setZIndex(true);
+      } else {
+        setZIndex(false);
+      }
+    }
+  };
 
-    const fetchFields = async (id) => {
-      const token = window.localStorage.getItem("token");
-      const lang_id = id;
-      const result = await dispatch(FiledGetAllLanguageThunk(lang_id, token));
-
+  const fetchUserData = async () => {
+    if (userData !== null) {
+      const result = await dispatch(getUserDataByIdThunk({ id: userData.id }));
       return result;
-    };
+    }
+    //   return null;
+  };
 
-    const renderField = (value) => {
-      let screenName = value;
-      if (langField) {
-        let filterField = langField.filter((i) => i.field === value);
-        if (filterField.length > 0) {
-          screenName = filterField[0].description;
-        }
+  const fetchFields = async (id) => {
+    const token = window.localStorage.getItem("token");
+    const lang_id = id;
+    const result = await dispatch(FiledGetAllLanguageThunk(lang_id, token));
+
+    return result;
+  };
+
+  const renderField = (value) => {
+    let screenName = value;
+    if (langField) {
+      let filterField = langField.filter((i) => i.field === value);
+      if (filterField.length > 0) {
+        screenName = filterField[0].description;
       }
-      return screenName;
-    };
+    }
+    return screenName;
+  };
 
-    const renderScreen = () => {
-      let screenName;
-      if (langField) {
-        let filterField = langField.filter((i) => i.field === "Logout");
-        if (filterField.length > 0) {
-          screenName = filterField[0].description;
-        } else {
-          screenName = "Logout";
-        }
+  const onHandleList = () => {
+    setOpenDarwar(!openDarwar);
+  };
+
+  const onHandleJwes = () => {
+    setjwestabopen(!jwestabOpen);
+  };
+
+  const renderScreen = () => {
+    let screenName;
+    if (langField) {
+      let filterField = langField.filter((i) => i.field === "Logout");
+      if (filterField.length > 0) {
+        screenName = filterField[0].description;
       } else {
         screenName = "Logout";
       }
+    } else {
+      screenName = "Logout";
+    }
 
-      const screen = screenByRole?.screens.map((item) => {
-        let screenName;
-        if (langField) {
-          let filterField = langField.filter(
-            (i) => i.field === item.screenName
-          );
-          if (filterField.length > 0) {
-            screenName = filterField[0].description;
-          } else {
-            screenName = item.screenName;
-          }
+
+    console.log("screenByRole?.screens",screenByRole?.screens)
+    /// very Important Code please dont Remove //////
+    const screen = screenByRole?.screens.map((item) => {
+      let screenName;
+      if (langField?.length > 0) {
+        let filterField = langField.filter((i) => i.field === item.screenName);
+        if (filterField.length > 0) {
+          screenName = filterField[0].description;
         } else {
           screenName = item.screenName;
         }
-
-        return (
-          <>
-          
-            <ListItem
-              button
-              key={item.id}
-              onClick={(event) => {
-                event.preventDefault();
-                history.push(item.screenUrl);
-              }}
-            >
-              <ListItemIcon>
-                <FiberManualRecordIcon
-                  style={{ color: "#fff", fontSize: 18 }}
-                />
-              </ListItemIcon>
-              <ListItemText primary={screenName} />
-            </ListItem>
-          </>
-        );
-      });
+      } else {
+        screenName = item.screenName;
+      }
 
       return (
         <>
-          {screen}
           <ListItem
             button
-            onClick={() => {
-              userlogout();
-              dispatch(clearToken());
-              dispatch(clearAuthReducer());
-              dispatch(clearScreen());
-              dispatch(clearAssignRoleState());
-              dispatch(clearAcessScreen());
-              dispatch(clearCustomeTheme());
-              localStorage.clear();
-              history.push("/Login");
+            key={item.id}
+            onClick={(event) => {
+              event.preventDefault();
+              history.push(item.screenUrl);
             }}
           >
-            <ListItemIcon>
-              <LayersIcon style={{ color: "#fff", fontSize: 18 }} />
+            <Collapse in={openDarwar} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemIcon>
+                    <FiberManualRecordIcon
+                      style={{ color: "#fff", fontSize: 18 }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText primary={screenName} />
+                </ListItemButton>
+              </List>
+            </Collapse>
+
+            {/* <ListItemIcon>
+              <FiberManualRecordIcon style={{ color: "#fff", fontSize: 18 }} />
             </ListItemIcon>
-            <ListItemText primary={screenName} />
+            <ListItemText primary={screenName} /> */}
           </ListItem>
         </>
       );
-    };
+    });
+ /// very Important Code please dont Remove //////
+
+    const getAccessScreensUser = screenByRole.screens?.map((listItem) => {
+      if (listItem.companyId === 1) {
+        return (
+          <>
+            <ListItem
+              button
+              key={screen.id}
+              onClick={(event) => {
+                event.preventDefault();
+                history.push(listItem.screenUrl);
+              }}
+            >
+              <Collapse in={openDarwar} timeout="auto" unmountOnExit>
+                {/* <List component="div" disablePadding> */}
+                  <ListItemButton sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <FiberManualRecordIcon
+                        style={{ color: "#fff", fontSize: 18 }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText primary={listItem.screenName} />
+                  </ListItemButton>
+                {/* </List> */}
+              </Collapse>
+            </ListItem>
+          </>
+        );
+      }
+    });
+
+    const getAccessScreensJwes = screenByRole.screens?.map((listScreen) => {
+      if (listScreen.companyId === 2) {
+        return (
+          <>
+            <ListItem
+              button
+              key={screen.id}
+              onClick={(event) => {
+                event.preventDefault();
+                history.push(listScreen.screenUrl);
+              }}
+            >
+              <Collapse in={jwestabOpen} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItemButton sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <FiberManualRecordIcon
+                        style={{ color: "#fff", fontSize: 18 }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText primary={listScreen.screenName} />
+                  </ListItemButton>
+                </List>
+              </Collapse>
+            </ListItem>
+          </>
+        );
+      }
+    });
+   
 
     return (
       <>
-        <ThemeProvider theme={darkTheme}>
-          <div className={classes.root}>
-            <CssBaseline />
-            <AppBar
-              position="absolute"
-              style={{ width: "100%" }}
-              className={clsx(
-                zIndex ? classes.appBar : classes.appBarIndex,
-                open && classes.appBarShift,
-                getTheme === "dark"
-                  ? classes.drawerDarkColor
-                  : classes.drawerBlueColor
-              )}
-            >
-              <Toolbar className={classes.toolbar}>
-                <Typography
-                  component="h1"
-                  variant="h6"
-                  color="inherit"
-                  noWrap
-                  className={classes.title}
-                >
-                  {/* {screename} */}
-                </Typography>
+        <ListItemButton onClick={onHandleList}>
+          <ListItemIcon>
+            <LayersIcon style={{ color: "#fff", fontSize: 18 }} />
+          </ListItemIcon>
+          <ListItemText primary="UserManagement" />
+          {openDarwar ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
 
-                <LanguageSelect onLanguageClick={onLanguageClick} />
-                <IconButton color="inherit">
-                  <Badge badgeContent={4} color="secondary">
-                    <NotificationsIcon />
-                  </Badge>
-                </IconButton>
-                <IconButton color="primary">
-                  <Avatar
-                    style={{ marginLeft: 10 }}
-                    aria-controls="simple-menu"
-                    aria-haspopup="true"
-                    onClick={handleClick}
-                    className={classes.pink}
-                  >
-                    <PersonIcon />
-                  </Avatar>
-                </IconButton>
+        {openDarwar && getAccessScreensUser}
+        <ListItemButton onClick={onHandleJwes}>
+          <ListItemIcon>
+            <LayersIcon style={{ color: "#fff", fontSize: 18 }} />
+          </ListItemIcon>
+          <ListItemText primary="JewsCalendar" />
+          {jwestabOpen ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        {jwestabOpen && getAccessScreensJwes}
 
-                <Menu
-                  id="simple-menu"
-                  style={{ marginTop: 45 }}
-                  anchorEl={menu}
-                  keepMounted
-                  open={Boolean(menu)}
-                  onClose={handleClosemenu}
-                >
-                  <MenuItem onClick={handleClosemenu}>
-                    {renderField("Profile")}{" "}
-                  </MenuItem>
-                  <MenuItem onClick={handleClosemenu}>
-                    {renderField("Setting")}
-                  </MenuItem>
-                  <MenuItem onClick={handleClosemenu}>
-                    {renderField("Message Box")}
-                  </MenuItem>
-                  <MenuItem onClick={handleClosemenu}>
-                    {renderField("Activities")}
-                  </MenuItem>
-                  <MenuItem onClick={handleClosemenu}>
-                    {renderField("Feeds")}
-                  </MenuItem>
-                  <MenuItem onClick={handleClosemenu}>
-                    {renderField("Search")}
-                  </MenuItem>
-                  <MenuItem>
-                    {renderField("Dark Mode")}
-                    <FormControlLabel
-                      style={{ marginLeft: 1 }}
-                      control={
-                        <Switch
-                          checked={getTheme === "dark" ? true : false}
-                          onChange={handleChange}
-                          name="chackedB"
-                          color="primary"
-                        />
-                      }
-                    />
-                  </MenuItem>
-                </Menu>
-              </Toolbar>
-            </AppBar>
-            <Drawer
-              bd={"red"}
-              variant="permanent"
-              classes={{
-                paper: clsx(
-                  classes.drawerPaper,
-                  !open && classes.drawerPaperClose,
-                  getTheme === "dark"
-                    ? classes.drawerDarkColor
-                    : classes.drawerBlueColor
-                ),
-              }}
-              open={open}
-            >
-              <div className={classes.toolbarIcon}>
-                {open ? (
-                  <>
-                    <Avatar variant="square" className={classes.avatar}>
-                      B
-                    </Avatar>
-                    <IconButton onClick={handleDrawerClose}>
-                      <ChevronLeftIcon />
-                      {/* <ChevronRightIcon /> */}
-                    </IconButton>
-                  </>
-                ) : (
-                  <IconButton
-                    style={{ marginLeft: 8 }}
-                    edge="start"
-                    color="inherit"
-                    aria-label="open drawer"
-                    onClick={handleDrawerOpen}
-                    // className={clsx(!zIndex ? classes.menuButton : classes.menuButtonLeft, open && classes.menuButtonHidden,)}
-                  >
-                    <MenuIcon />
-                  </IconButton>
-                )}
-              </div>
-              <Divider />
-              <List>
-                <div>{screenByRole?.screens && renderScreen()}</div>
-              </List>
-              <Divider />
-            </Drawer>
-            <main className={classes.content}>
-              <div className={classes.appBarSpacer} />
-              {children}
-            </main>
-          </div>
-        </ThemeProvider>
+        <ListItem
+          button
+          onClick={() => {
+            userlogout();
+            dispatch(clearToken());
+            dispatch(clearAuthReducer());
+            dispatch(clearScreen());
+            dispatch(clearAssignRoleState());
+            dispatch(clearAcessScreen());
+            dispatch(clearCustomeTheme());
+            localStorage.clear();
+            history.push("/Login");
+          }}
+        >
+          <ListItemIcon>
+            <LayersIcon style={{ color: "#fff", fontSize: 18 }} />
+          </ListItemIcon>
+          <ListItemText primary={screenName} />
+        </ListItem>
       </>
     );
   };
 
+  return (
+    <>
+      <ThemeProvider theme={darkTheme}>
+        <div className={classes.root}>
+          <CssBaseline />
+          <AppBar
+            position="absolute"
+            style={{ width: "100%" }}
+            className={clsx(
+              zIndex ? classes.appBar : classes.appBarIndex,
+              open && classes.appBarShift,
+              getTheme === "dark"
+                ? classes.drawerDarkColor
+                : classes.drawerBlueColor
+            )}
+          >
+            <Toolbar className={classes.toolbar}>
+              <Typography
+                component="h1"
+                variant="h6"
+                color="inherit"
+                noWrap
+                className={classes.title}
+              >
+                {/* {screename} */}
+              </Typography>
+
+              <LanguageSelect onLanguageClick={onLanguageClick} />
+              <IconButton color="inherit">
+                <Badge badgeContent={4} color="secondary">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+              <IconButton color="primary">
+                <Avatar
+                  style={{ marginLeft: 10 }}
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  onClick={handleClick}
+                  className={classes.pink}
+                >
+                  <PersonIcon />
+                </Avatar>
+              </IconButton>
+
+              <Menu
+                id="simple-menu"
+                style={{ marginTop: 45 }}
+                anchorEl={menu}
+                keepMounted
+                open={Boolean(menu)}
+                onClose={handleClosemenu}
+              >
+                <MenuItem onClick={handleClosemenu}>
+                  {renderField("Profile")}{" "}
+                </MenuItem>
+                <MenuItem onClick={handleClosemenu}>
+                  {renderField("Setting")}
+                </MenuItem>
+                <MenuItem onClick={handleClosemenu}>
+                  {renderField("Message Box")}
+                </MenuItem>
+                <MenuItem onClick={handleClosemenu}>
+                  {renderField("Activities")}
+                </MenuItem>
+                <MenuItem onClick={handleClosemenu}>
+                  {renderField("Feeds")}
+                </MenuItem>
+                <MenuItem onClick={handleClosemenu}>
+                  {renderField("Search")}
+                </MenuItem>
+                <MenuItem>
+                  {renderField("Dark Mode")}
+                  <FormControlLabel
+                    style={{ marginLeft: 1 }}
+                    control={
+                      <Switch
+                        checked={getTheme === "dark" ? true : false}
+                        onChange={handleChange}
+                        name="chackedB"
+                        color="primary"
+                      />
+                    }
+                  />
+                </MenuItem>
+              </Menu>
+            </Toolbar>
+          </AppBar>
+          <Drawer
+            bd={"red"}
+            variant="permanent"
+            classes={{
+              paper: clsx(
+                classes.drawerPaper,
+                !open && classes.drawerPaperClose,
+                getTheme === "dark"
+                  ? classes.drawerDarkColor
+                  : classes.drawerBlueColor
+              ),
+            }}
+            open={open}
+          >
+            <div className={classes.toolbarIcon}>
+              {open ? (
+                <>
+                  <Avatar variant="square" className={classes.avatar}>
+                    B
+                  </Avatar>
+                  <IconButton onClick={handleDrawerClose}>
+                    <ChevronLeftIcon />
+                    {/* <ChevronRightIcon /> */}
+                  </IconButton>
+                </>
+              ) : (
+                <IconButton
+                  style={{ marginLeft: 8 }}
+                  edge="start"
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={handleDrawerOpen}
+                  // className={clsx(!zIndex ? classes.menuButton : classes.menuButtonLeft, open && classes.menuButtonHidden,)}
+                >
+                  <MenuIcon />
+                </IconButton>
+              )}
+            </div>
+            <Divider />
+            <List>
+              <div>{screenByRole?.screens && renderScreen()}</div>
+            </List>
+            <Divider />
+          </Drawer>
+          <main className={classes.content}>
+            <div className={classes.appBarSpacer} />
+            {children}
+          </main>
+        </div>
+      </ThemeProvider>
+    </>
+  );
+};

@@ -11,7 +11,7 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { API_ENDPOINTS_ORG } from "../../../services/api_url";
+import { API_ENDPOINTS_Banner } from "../../../services/api_url";
 import { axiosInstance } from "../../../services/axiosInstance";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { useHistory } from "react-router-dom";
@@ -22,8 +22,6 @@ import FirstPageIcon from "@material-ui/icons/FirstPage";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
-import SearchIcon from "@material-ui/icons/Search";
-import TextField from "@mui/material/TextField";
 import swal from "sweetalert";
 
 const useStyles1 = makeStyles((theme) => ({
@@ -47,47 +45,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
 
-export const Organization = () => {
+export const BannerList = () => {
   const history = useHistory();
   const [getDetails, setGetDetails] = useState([]);
   const [isloading, setIsloading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [searchInput, setSearchInput] = useState("");
-  const [filteredResults, setFilteredResults] = useState([]);
-
-  const searchItems = (searchValue) => {
-    setSearchInput(searchValue);
-    if (searchInput !== "") {
-      const filteredData = getDetails.filter((item) => {
-        return Object.values(item)
-          .join("")
-          .toLowerCase()
-          .includes(searchInput.toLowerCase());
-      });
-      setFilteredResults(filteredData);
-    } else {
-      setFilteredResults(getDetails);
-    }
-  };
-
-  console.log("filteredResults", filteredResults);
-
-  const filteredData = getDetails.filter((item) => {
-    return Object.values(item)
-      .join("")
-      .toLowerCase()
-      .includes(searchInput.toLowerCase());
-  });
-
-  const handleOpen = () => {
-    history.push("/addorg");
-  };
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -104,22 +71,25 @@ export const Organization = () => {
   };
 
   useEffect(() => {
-    getAllOrganization();
+    getAllEVENTDetails();
   }, []);
 
-  const getAllOrganization = async () => {
+  const getAllEVENTDetails = async () => {
     setIsloading(true);
-    const result = await axiosInstance.get(`${API_ENDPOINTS_ORG.get_all_org}`);
+    const result = await axiosInstance.post(
+      `${API_ENDPOINTS_Banner.Get_all_Banner}`
+    );
+    console.log("result------>", result);
     if (result.data) {
       setIsloading(false);
       setGetDetails(result.data);
     }
   };
   const handleEdit = (id) => {
-    history.push(`/AddORG/${id}`);
+    history.push(`/AddBanner/${id}`);
   };
   const handleDetail = (id) => {
-    history.push(`/DetailOrg/${id}`);
+    history.push(`/BannerDetail/${id}`);
   };
   const sweetalrt = (id) => {
     swal({
@@ -144,16 +114,18 @@ export const Organization = () => {
     try {
       axiosInstance
         .delete(
-          `http://jewcalendar-001-site1.btempurl.com/api/Organization/Delete-Organization?Id=${id}`
+          `http://jewcalendar-001-site1.btempurl.com/api/Banner/Delete?id=${id}`
         )
         .then((res) => {
-          if (res.data.message === "Organization Deleted") {
-            getAllOrganization();
+          if (res.data.message ==="Deleted") {
+            getAllEVENTDetails();
             setIsloading(false);
             handleClose();
           }
         });
-    } catch (error) {}
+    } catch (error) {
+      console.log("error", error);
+    }
   };
   const handleClickOpen = () => {
     setOpen(true);
@@ -245,83 +217,51 @@ export const Organization = () => {
             padding: "15px 15px",
             margin: "5px 10px",
           }}
-          onClick={handleOpen}
+          onClick={() => history.push("/AddBanner")}
         >
-          ADD ORGANIZATION
+          ADD COVER
         </Button>
-        <TextField
-          id="search-bar"
-          className="text"
-          onChange={(e) => searchItems(e.target.value)}
-          label="Enter a Business name"
-          variant="outlined"
-          placeholder="Search..."
-          size="small"
-          sx={{ ml: "620px" }}
-        />
-        <IconButton type="submit" aria-label="search">
-          <SearchIcon style={{ fill: "blue" }} />
-        </IconButton>
+      
       </div>
       <div style={{ marginLeft: 20 }}>
         <TableContainer component={Paper}>
           <Table sx={{ width: "1250px" }} aria-label="customized table">
             <TableHead>
               <TableRow>
-              <StyledTableCell>id</StyledTableCell>
-                <StyledTableCell>Organization Name</StyledTableCell>
-                <StyledTableCell>Organization Name Persian</StyledTableCell>
-                <StyledTableCell>Organization Address </StyledTableCell>
-                <StyledTableCell>Url</StyledTableCell>
-                <StyledTableCell>ContactPerson</StyledTableCell>
-                <StyledTableCell>Mobile Number</StyledTableCell>
-                <StyledTableCell>Email</StyledTableCell>
-                <StyledTableCell align="center" colSpan="3">
+                <StyledTableCell>Id</StyledTableCell>
+                <StyledTableCell>Banner PublishedYear </StyledTableCell>
+                <StyledTableCell >Banner Image</StyledTableCell>
+                <StyledTableCell   >
                   Actions
                 </StyledTableCell>
               </TableRow>
             </TableHead>
 
             <TableBody>
-              {filteredResults.length > 0
-                ? (rowsPerPage > 0
-                    ? filteredResults.slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage
-                      )
-                    : filteredResults
-                  ).map((item, index) => {
-                    return (
-                      <StyledTableRow key={index}>
-                        <StyledTableCell component="th" scope="row">
-                          {" "}
-                          {++index}{" "}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {" "}
-                          {item.organizationNameEnglish}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {" "}
-                          {item.organizationNamePersian}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {item.organizationAddress}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {item.url}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {item.contactPerson}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {item.mobileNo}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {item.email}
-                        </StyledTableCell>
-                        <div
+              {(rowsPerPage > 0
+                ? getDetails.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : getDetails
+              ).map((item, index) => { 
+            
+                return (
+                  <StyledTableRow key={index}>
+                    <StyledTableCell component="th" scope="row">
+                      {" "}
+                      {++index}{" "}
+                    </StyledTableCell>
+                    <StyledTableCell component="th" scope="row">
+                      {" "}
+                      {item.bannerPublishedYear}
+                    </StyledTableCell>
+                    <StyledTableCell sx={{textAlign:"start"}} component="th" scope="row">
+                      {item.bannerImage}
+                    </StyledTableCell>
+                    <div
                           style={{
+                      
                             display: "flex",
                             margin: 5,
                             marginTop: "18px",
@@ -366,97 +306,13 @@ export const Organization = () => {
                             Delete
                           </Button>
                         </div>
-                      </StyledTableRow>
-                    );
-                  })
-                : (rowsPerPage > 0
-                    ? getDetails.slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage
-                      )
-                    : getDetails
-                  ).map((item, index) => {  
-                    return (
-                      <StyledTableRow key={index}>
-                        <StyledTableCell component="th" scope="row">
-                          {" "}
-                          {++index}{" "}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {" "}
-                          {item.organizationNameEnglish}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {" "}
-                          {item.organizationNamePersian}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {item.organizationAddress}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {item.url}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {item.contactPerson}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {item.mobileNo}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {item.email}
-                        </StyledTableCell>
-                        <div
-                          style={{
-                            display: "flex",
-                            margin: 5,
-                            marginTop: "18px",
-                          }}
-                          aria-label="outlined  button group"
-                        >
-                          <Button
-                            onClick={() => handleEdit(item.id)}
-                            style={{
-                              margin: 5,
-                              backgroundColor: "#3945b9",
-                              color: "white",
-                            }}
-                          >
-                            Edit
-                          </Button>
-                          <Button
-                            sx={{ marginLeft: "8px" }}
-                            onClick={() => handleDetail(item.id)}
-                            style={{
-                              margin: 5,
-                              backgroundColor: "#3945b9",
-                              color: "white",
-                            }}
-                          >
-                            Detail
-                          </Button>
+                  </StyledTableRow>
+                );
+              })}
 
-                          <Button
-                            open={open}
-                            id={item.id}
-                            onClick={() => sweetalrt(item.id)}
-                            handleClose={handleClose}
-                            handleClickOpen={handleClickOpen}
-                            style={{
-                              margin: 5,
-                              backgroundColor: "#3945b9",
-                              color: "white",
-                            }}
-                          >
-                            {" "}
-                            Delete
-                          </Button>
-                        </div>
-                      </StyledTableRow>
-                    );
-                  })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 53 * emptyRows }}>
-                  <TableCell colSpan={3} />
+                  <TableCell colSpan={6} />
                 </TableRow>
               )}
             </TableBody>
@@ -465,7 +321,7 @@ export const Organization = () => {
               <TableRow>
                 <TablePagination
                   rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                  colSpan={9}
+                  colSpan={3}
                   count={getDetails.length}
                   rowsPerPage={rowsPerPage}
                   page={page}

@@ -45,7 +45,7 @@ export const AddPdf = () => {
 
   const fetchDetails = async (id) => {
     const result = await axios.get(
-      `http://zewscalender-001-site1.btempurl.com/api/File/Get-File-By-Id?Id=${id}`,
+      `http://jewcalendar-001-site1.btempurl.com/api/File/Get-File-By-Id?Id=${id}`,
     )
     setInfo(result.data)
   }
@@ -71,14 +71,14 @@ export const AddPdf = () => {
 
         if (response.data.message === "File Updated") {
           setLoading(false)
-          history.push('/pdfdetails')
+          history.push('/calenderdetails')
         }
 
       } else {
         const response = await axiosInstance.post(`${API_ENDPOINTS_Files.upload_file}`, data)
         if (response.data.message === "Files Uploaded Successfully") {
           setLoading(false)
-          history.push('/pdfdetails')
+          history.push('/calenderdetails')
         }
       }
     } catch (error) {
@@ -152,7 +152,7 @@ export const AddPdf = () => {
     <Grid>
       <Paper elevation={0} style={paperStyle}>
         <Grid align="center">
-        <h2 style={headerStyle}>{id ? "Update" : "Add New"} PDF</h2>
+        <h2 style={headerStyle}>{id ? "Update" : "Add New"} Iranian Calendar</h2>
         </Grid>
         <br />
         <br />
@@ -219,7 +219,7 @@ export const AddPdf = () => {
             variant="contained"
             color="primary"
             align="center"
-            onClick={() => history.push('/pdfdetails')}
+            onClick={() => history.push('/calenderdetails')}
           >
             Go Back
           </Button>

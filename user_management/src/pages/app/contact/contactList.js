@@ -141,7 +141,7 @@ export const ContactList = () => {
     try {
       axiosInstance
         .post(
-          `http://zewscalender-001-site1.btempurl.com/api/Contact/Delete?id=${id}`
+          `http://jewcalendar-001-site1.btempurl.com/api/Contact/Delete?id=${id}`
         )
         .then((res) => {
           if (res.data.message === "Deleted") {
