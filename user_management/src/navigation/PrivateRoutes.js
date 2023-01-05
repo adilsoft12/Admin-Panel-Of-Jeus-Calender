@@ -15,6 +15,7 @@ export const PrivateRoutes = ({ children, ...rest }) => {
     const isAuthenticated = useriD;
     let status = false;
 
+    console.log(" rest.path",  rest.path, {screenByRole})
 
     if (screenByRole) {
         screenByRole.map((item) => {
@@ -24,6 +25,8 @@ export const PrivateRoutes = ({ children, ...rest }) => {
             };
         });
     }
+
+    console.log("statusstatus>>>",status)
 
     return (<Route {...rest} render={() => {
         if (isAuthenticated && rest.path === '/' && !status) {

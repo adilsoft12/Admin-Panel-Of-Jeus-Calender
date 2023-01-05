@@ -214,6 +214,8 @@ export const RoleCard = ({ data, handleClose, open, setOpen }) => {
             screenId: sdata.join(),
             canAccess: true
         }
+
+        console.log("AccessData>>",data)
         const token = window.localStorage.getItem('token')
         const result = await dispatch(addScreenAccessThunk({ data, token }))
         setSecreenOpen(false)

@@ -353,8 +353,7 @@ export const AppConainer = ({
       screenName = "Logout";
     }
 
-
-    console.log("screenByRole?.screens",screenByRole?.screens)
+    console.log("screenByRole?.screens", screenByRole?.screens);
     /// very Important Code please dont Remove //////
     const screen = screenByRole?.screens.map((item) => {
       let screenName;
@@ -400,10 +399,11 @@ export const AppConainer = ({
         </>
       );
     });
- /// very Important Code please dont Remove //////
+    /// very Important Code please dont Remove //////
+ 
 
     const getAccessScreensUser = screenByRole.screens?.map((listItem) => {
-      if (listItem.companyId === 1) {
+      if (listItem.type === "Usermanagement") {
         return (
           <>
             <ListItem
@@ -416,14 +416,14 @@ export const AppConainer = ({
             >
               <Collapse in={openDarwar} timeout="auto" unmountOnExit>
                 {/* <List component="div" disablePadding> */}
-                  <ListItemButton sx={{ pl: 4 }}>
-                    <ListItemIcon>
-                      <FiberManualRecordIcon
-                        style={{ color: "#fff", fontSize: 18 }}
-                      />
-                    </ListItemIcon>
-                    <ListItemText primary={listItem.screenName} />
-                  </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemIcon>
+                    <FiberManualRecordIcon
+                      style={{ color: "#fff", fontSize: 18 }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText primary={listItem.screenName} />
+                </ListItemButton>
                 {/* </List> */}
               </Collapse>
             </ListItem>
@@ -433,7 +433,7 @@ export const AppConainer = ({
     });
 
     const getAccessScreensJwes = screenByRole.screens?.map((listScreen) => {
-      if (listScreen.companyId === 2) {
+      if (listScreen.type === "JewsCalendar") {
         return (
           <>
             <ListItem
@@ -461,7 +461,6 @@ export const AppConainer = ({
         );
       }
     });
-   
 
     return (
       <>
