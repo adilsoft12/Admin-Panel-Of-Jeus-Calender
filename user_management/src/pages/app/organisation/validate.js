@@ -1,6 +1,6 @@
 import * as yup from "yup";
 export const validationSchema = yup.object().shape({
-    organizationName: yup.string()
+  organizationNameEnglish: yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),

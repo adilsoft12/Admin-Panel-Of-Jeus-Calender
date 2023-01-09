@@ -36,78 +36,86 @@ export function DetailOrg() {
         `http://jewcalendar-001-site1.btempurl.com/api/Organization/Get-Organization-By-Id?Id=${data}`
       );
       setInfo(result.data);
-    console.log("result-------------->",result.data)
     } catch (error) {}
   }
 
   return (
     <AppConainer>
-      <Paper  elevation={3} sx={{marginLeft:"250px"}}>
-      <Grid
-      style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}
-    >
-      <Grid
-        style={{
-          // backgroundColor: "#C3C6E2",
-          backgroundSize: "cover",
-          textAlign: "start",
-          paddingTop: "50px",
-          paddingBottom: "50px",
-          paddingLeft: "40px",
-          paddingRight: "40px",
-        }}
+    <Paper elevation={3} sx={{marginLeft:"250px"}}>
+    <Grid
+        style={{ display: "flex", justifyContent: "center", marginTop: "30px",alignItems:"center" }}
       >
-        <h1 className="titr-font" style={{ headerStyle, marginLeft: "10px" ,textAlign:"center"}}>
-          {" "}
-          Organization Detail{" "}
-        </h1>
-
-        <Typography className="BBCNassim-font" sx={{ fontSize: 20, }}>
-        <a style={{fontWeight:"bold",marginRight:"29px"}}>OrganizationName</a>: {info.organizationNameEnglish}
-        </Typography>
-        <Typography className="BBCNassim-font" sx={{ fontSize: 20, }}>
-        <a style={{fontWeight:"bold",marginRight:"29px"}}>OrganizationNamePersian</a>: {info.organizationNamePersian}
-        </Typography>
-        <Typography className="BBCNassim-font" sx={{ fontSize: 20, }}>
-        <a style={{fontWeight:"bold",marginRight:"143px"}}>Email</a>: {info.email}
-        </Typography>
-        <Typography className="BBCNassim-font" sx={{ fontSize: 20, }}>
-          <a style={{fontWeight:"bold",marginRight:"123px"}}>Country</a>: {info.countryName}
-        </Typography>
-        <Typography className="BBCNassim-font" sx={{ fontSize: 20,  }}>
-        <a style={{fontWeight:"bold",marginRight:"10px"}}>OrganizationAddress</a>:{info.organizationAddress}
-        </Typography>
-        <Typography className="BBCNassim-font" sx={{ fontSize: 20, }}>
-        <a style={{fontWeight:"bold",marginRight:"168px"}}>Url</a>: {info.url}
-        </Typography>
-        <Typography className="BBCNassim-font" sx={{ fontSize: 20, }}>
-        <a style={{fontWeight:"bold",marginRight:"68px"}}>ContactPerson</a>: {info.contactPerson}
-        </Typography>
-        <Typography className="BBCNassim-font" sx={{ fontSize: 20, }}>
-        <a style={{fontWeight:"bold",marginRight:"110px"}}>MobileNo</a>: {info.mobileNo}
-        </Typography>
-
-        <Button
-          sx={{
-            ml: 1,
-            mt: 3,
-            backgroundColor: "#3945b9",
-            color: "white",
-            marginLeft: "-2px",
-            marginBottom: "20px",
+        <Grid
+          style={{
+            // backgroundColor: "rgb(63 81 181)",
+            backgroundSize: "cover",
+            textAlign: "start",
+            paddingTop: "5px",
+            paddingBottom: "13px",
+            paddingLeft: "78px",
+            paddingRight: "78px",
           }}
-          type="submit"
-          variant="contained"
-          align="center"
-          onClick={() => history.push("/Organization")}
         >
-          Go Back
-        </Button>
+          <h1  className="titr-font" style={{ headerStyle, textAlign: "center",fontWeight:"bold" }}>
+            {" "}
+            Organization Detail{" "}
+          </h1>
+
+          <Typography className="BBCNassim-font" sx={{ fontSize: 20, }}>
+            {" "}
+            <a style={{fontWeight:"bold",marginRight:"40px"}}>OrganizationName</a>: {info.organizationNameEnglish}
+          </Typography>
+         
+          <Typography className="BBCNassim-font" sx={{ fontSize: 20, }}>
+            {" "}
+           <a style={{fontWeight:"bold",marginRight:"10px"}}> OrganizationNamePersian</a>: {info.organizationNamePersian}
+          </Typography>
+          <Typography className="BBCNassim-font" sx={{ fontSize: 20, }}>
+            {" "}
+            <a style={{fontWeight:"bold",marginRight:"62px"}}>OrganizationAddress</a>:{info.organizationAddress}
+          </Typography>
+         
+          <Typography className="BBCNassim-font" sx={{ fontSize: 20,}}>
+            {" "}
+            <a style={{fontWeight:"bold",marginRight:"125px"}}>Country</a>: {info.countryName}
+          </Typography>
+          <Typography className="BBCNassim-font" sx={{ fontSize: 20,}}>
+            {" "}
+            <a style={{fontWeight:"bold",marginRight:"125px"}}>Email</a>: {info.email}
+          </Typography>
+          <Typography className="BBCNassim-font" sx={{ fontSize: 20,}}>
+            {" "}
+            <a style={{fontWeight:"bold",marginRight:"125px"}}>URL</a>: {info.url}
+          </Typography>
+          <Typography className="BBCNassim-font" sx={{ fontSize: 20,}}>
+            {" "}
+            <a style={{fontWeight:"bold",marginRight:"125px"}}>ContactPerson</a>: {info.contactPerson}
+          </Typography>
+          <Typography className="BBCNassim-font" sx={{ fontSize: 20,}}>
+            {" "}
+            <a style={{fontWeight:"bold",marginRight:"125px"}}>MobileNo</a>: {info.mobileNo}
+          </Typography>
+
+          <Button
+            sx={{
+              ml: 1,
+              mt: 3,
+              backgroundColor: "#3945b9",
+              color: "white",
+              marginLeft: "0px",
+              marginBottom: "20px",
+            }}
+            type="submit"
+            variant="contained"
+            align="center"
+            onClick={() => history.push("/Organization")}
+          >
+            Go Back
+          </Button>
+        </Grid>
       </Grid>
-    </Grid>
-      </Paper>
-    
+    </Paper>
+     
     </AppConainer>
-    
   );
 }

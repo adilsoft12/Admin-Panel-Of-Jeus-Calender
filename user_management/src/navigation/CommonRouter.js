@@ -4,7 +4,7 @@ import { Advertisement, AssignRole, DashBoard, ForgotPassword, Login, Report, Sc
 import { PrivateRoutes } from './PrivateRoutes';
 import { useUserData } from '../hooks/useUserData';
 import { createBrowserHistory } from 'history';
-import { Organization } from '../pages/app/organisation/index';
+import { Organisation } from '../pages';
 import { AddORG } from '../pages/app/organisation/addorg';
 import { AddADV } from '../pages/app/advertisement/addAdv';
 import { DetailOrg } from '../pages/app/organisation/detail';
@@ -94,7 +94,7 @@ export const CommonRouter = () => {
                 <Route exact path='./' component={Login} />
                 <Route exact path='/assignPermission' component={AssignPermission} />
                 <Route exact path='/CreateBusinessForm' component={CreateBusinessForm} />
-                <Route exact path='/Organization' component={Organization} />
+                <Route exact path='/Organization' component={Organisation} />
                 <Route exact path='/AddORG' component={AddORG} />
                 <Route path="/AddORG/:id" component={AddORG} />
                 <Route path="/DetailORG/:id" component={DetailOrg} />

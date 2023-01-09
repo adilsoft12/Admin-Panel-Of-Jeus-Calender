@@ -53,7 +53,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export const Organization = () => {
+export const Organisation = () => {
   const history = useHistory();
   const [getDetails, setGetDetails] = useState([]);
   const [isloading, setIsloading] = useState(false);
@@ -104,10 +104,10 @@ export const Organization = () => {
   };
 
   useEffect(() => {
-    getAllOrganization();
+    getAllOrganisation();
   }, []);
 
-  const getAllOrganization = async () => {
+  const getAllOrganisation = async () => {
     setIsloading(true);
     const result = await axiosInstance.get(`${API_ENDPOINTS_ORG.get_all_org}`);
     if (result.data) {
@@ -148,7 +148,7 @@ export const Organization = () => {
         )
         .then((res) => {
           if (res.data.message === "Organization Deleted") {
-            getAllOrganization();
+            getAllOrganisation();
             setIsloading(false);
             handleClose();
           }
@@ -265,10 +265,10 @@ export const Organization = () => {
       </div>
       <div style={{ marginLeft: 20 }}>
         <TableContainer component={Paper}>
-          <Table sx={{ width: "1250px" }} aria-label="customized table">
+          <Table sx={{ width: "1100px" }} aria-label="customized table">
             <TableHead>
               <TableRow>
-              <StyledTableCell>id</StyledTableCell>
+                 <StyledTableCell>Id</StyledTableCell>
                 <StyledTableCell>Organization Name</StyledTableCell>
                 <StyledTableCell>Organization Name Persian</StyledTableCell>
                 <StyledTableCell>Organization Address </StyledTableCell>
@@ -375,7 +375,7 @@ export const Organization = () => {
                         page * rowsPerPage + rowsPerPage
                       )
                     : getDetails
-                  ).map((item, index) => {  
+                  ).map((item, index) => {
                     return (
                       <StyledTableRow key={index}>
                         <StyledTableCell component="th" scope="row">

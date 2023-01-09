@@ -22,7 +22,9 @@ export const AddORG = () => {
   const [selectedcountries, setSelectedCountries] = useState("");
   const history = useHistory();
 
-  console.log("countryList", countries)
+  console.log("countries--->", countries);
+
+  console.log("valuu----->", info.countryId);
 
   console.log("selectedcountries", { selectedcountries, info });
 
@@ -33,7 +35,7 @@ export const AddORG = () => {
     align: "center",
   };
 
-  // console.log("info.countryId", typeof(info.countryId) )
+  console.log("info.countryId", typeof info.countryId);
   const headerStyle = { margin: 0 };
 
   useEffect(() => {
@@ -43,9 +45,8 @@ export const AddORG = () => {
     if (tempArray?.[2]) {
       fetchDetails(tempArray?.[2]);
     }
-console.log("tempArray------>",tempArray);
-
   }, []);
+
   const fetchDetails = async (data) => {
     const result = await axios.get(
       `http://jewcalendar-001-site1.btempurl.com/api/Organization/Get-Organization-By-Id?Id=${data}`
@@ -62,14 +63,17 @@ console.log("tempArray------>",tempArray);
       "http://jewcalendar-001-site1.btempurl.com/api/Organization/Add-Organization",
       data
     );
-    console.log("lisTdataSheowww", result)
+    console.log("lisTdataSheowww", result);
     if (result.data.message === "Organization Added") {
       history.push("/organization");
     }
   };
   const updateOrganisation = async (data) => {
     console.log("data------->", data);
-    const response = await axios.put(`http://jewcalendar-001-site1.btempurl.com/api/Organization/Update-Organization`, data)
+    const response = await axios.put(
+      `http://jewcalendar-001-site1.btempurl.com/api/Organization/Update-Organization`,
+      data
+    );
     // const response = await axiosInstance.put(
     //   `${API_ENDPOINTS_ORG.edit_org}`,
     //   data
@@ -89,31 +93,28 @@ console.log("tempArray------>",tempArray);
       `http://jewcalendar-001-site1.btempurl.com/api/Organization/Get-All-Organization-with-Country`
     );
 
-    console.log("listData>>>>", result)
+    console.log("listDsata", result);
     setCountries(result.data);
-    console.log("selectedcountry-------->",result.data)
   };
-
 
   console.log("infocountryName>>>", selectedcountries);
 
   const formik = useFormik({
     initialValues: {
       organizationNameEnglish: "",
-      organizationNamePersian:"",
+      organizationNamePersian: "",
       email: "",
-      countryId: "",
+      countryId:null,
       organizationAddress: "",
       url: "",
       contactPerson: "",
       mobileNo: "",
     },
-    validationSchema: validationSchema,
+    // validationSchema: validationSchema,
     onSubmit: (values) => {
       const queryObj = {
         id: Number(id || 0),
-        // countryId: Number(selectedcountries || info.countryId) ,
-        countryId: selectedcountries,
+        countryId: Number(selectedcountries || info.countryId),
         organizationNameEnglish: values.organizationNameEnglish,
         organizationNamePersian: values.organizationNamePersian,
         organizationAddress: values.organizationAddress,
@@ -122,7 +123,8 @@ console.log("tempArray------>",tempArray);
         email: values.email,
         mobileNo: values.mobileNo,
       };
-      console.log("DataUsdllaa", queryObj);
+
+      console.log("DataShow>>>>", queryObj);
       if (id) {
         updateOrganisation(queryObj);
       } else {
@@ -133,13 +135,13 @@ console.log("tempArray------>",tempArray);
 
   const { handleChange, handleSubmit, setFieldValue, values, errors, touched } =
     formik;
-
+  
   useEffect(() => {
     if (info) {
       setFieldValue("organizationNameEnglish", info.organizationNameEnglish);
       setFieldValue("organizationNamePersian", info.organizationNamePersian);
       setFieldValue("email", info.email);
-      setFieldValue("countryName", info.countryName);
+      setFieldValue("country", info.countryName);
       setFieldValue("organizationAddress", info.organizationAddress);
       setFieldValue("url", info.url);
       setFieldValue("contactPerson", info.contactPerson);
@@ -165,21 +167,31 @@ console.log("tempArray------>",tempArray);
             placeholder="Enter your Organization Name"
             value={values.organizationNameEnglish}
             onChange={handleChange("organizationNameEnglish")}
-            error={touched.organizationNameEnglish && Boolean(errors.organizationNameEnglish)}
-            helperText={touched.organizationNameEnglish && errors.organizationNameEnglish}
+            error={
+              touched.organizationNameEnglish &&
+              Boolean(errors.organizationNameEnglish)
+            }
+            helperText={
+              touched.organizationNameEnglish && errors.organizationNameEnglish
+            }
           />
 
-           <TextField
+          <TextField
             fullWidth
             sx={{ mt: 3 }}
             id="organizationNamePersian"
             name="organizationNamePersian"
-            label="Organization Nam ePersian "
-            placeholder="Enter your Organization Name"
+            label="Organization Name Persian"
+            placeholder="Enter your Organization Name Persian"
             value={values.organizationNamePersian}
             onChange={handleChange("organizationNamePersian")}
-            error={touched.organizationNamePersian && Boolean(errors.organizationNamePersian)}
-            helperText={touched.organizationNamePersian && errors.organizationNamePersian}
+            error={
+              touched.organizationNamePersian &&
+              Boolean(errors.organizationNamePersian)
+            }
+            helperText={
+              touched.organizationNamePersian && errors.organizationNamePersian
+            }
           />
 
           <TextField
