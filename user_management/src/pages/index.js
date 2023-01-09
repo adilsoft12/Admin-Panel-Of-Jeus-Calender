@@ -16,3 +16,4 @@ export { ContactList} from './app/contact/contactList';
 export {BannerList} from './app/banner/bannerlist';
 export {Organization} from './app/organisation/index';
 export {PdfList} from './app/pdfFile/pdflist';
+export {UpcomingEvent} from './app/upcomingEvent/upcomingevent';

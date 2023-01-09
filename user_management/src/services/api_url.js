@@ -47,3 +47,10 @@ export const API_ENDPOINTS_Banner = {
   Get_all_Banner: "/Banner/GetAll",
   Add_Banner: "Add-Banner",
 };
+export const API_ENDPOINTS_UpcomingEvent = {
+  Add_Upcoming_Event: "/UpcomingEvent/Add",
+  Edit_Upcoming_Event: "/UpcomingEvent/edit",
+  get_id_event: "/UpcomingEvent/GetBy-Id",
+  get_all_event: "/UpcomingEvent/GetAll",
+  delete_event: "/UpcomingEvent/Delete ",
+};
