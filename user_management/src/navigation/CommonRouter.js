@@ -63,6 +63,7 @@ export const CommonRouter = () => {
         <PrivateRoutes exact path="/dashboard">
           <DashBoard />
         </PrivateRoutes>
+        
 
         <PrivateRoutes exact path="/Report">
           <Report />
@@ -148,6 +149,7 @@ export const CommonRouter = () => {
         <Route exact path="/Login" component={Login} />
         <Route exact path="/permission" component={Permission} />
         <Route exact path="./" component={Login} />
+        
         <Route exact path="/assignPermission" component={AssignPermission} />
         <Route
           exact

@@ -54,3 +54,4 @@ export const API_ENDPOINTS_UpcomingEvent = {
   get_all_event: "/UpcomingEvent/GetAll",
   delete_event: "/UpcomingEvent/Delete ",
 };
+//
