@@ -187,6 +187,9 @@ export const PdfList = () => {
     rowsPerPage: PropTypes.number.isRequired,
   };
 
+
+  console.log("infolistData",getDetails )
+
   return (
     <AppConainer>
       <div style={{ margin: 5, marginTop: 30, marginLeft: "0px" }}>

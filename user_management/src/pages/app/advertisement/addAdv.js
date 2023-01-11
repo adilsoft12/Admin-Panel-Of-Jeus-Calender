@@ -124,11 +124,8 @@ export const AddADV = () => {
       setFieldValue("businessUrl", info.businessUrl);
       setFieldValue("imagePath", info.imagePath);
       setFieldValue("year", info.year);
-      // console.log("info----->",info.year)
     }
   }, [info]);
-
-  console.log("values>>>", values);
 
   const getBase64 = (file, cb) => {
     let reader = new FileReader();
@@ -149,12 +146,19 @@ export const AddADV = () => {
     });
   };
 
+  console.log("LIstData>>>", { errors, touched });
+
+  console.log("infoData", info);
+  const BaseImageURL = "http://jewcalendar-001-site1.btempurl.com/";
+  const showImagepatrh = Boolean(info.imagePath);
+
   // console.log("value of the year----->",values.year)
   return (
     <Grid>
-      <div className="add-theme" style={{  width: "900px",
-    marginLeft: "270px",
-    paddingTop: "5px",}}>
+      <div
+        className="add-theme"
+        style={{ width: "900px", marginLeft: "270px", paddingTop: "5px" }}
+      >
         <Grid align="center" sx={{ mt: 3 }}>
           <h2>{id ? "Update" : "Add New"} Advertisement</h2>
         </Grid>
@@ -170,7 +174,7 @@ export const AddADV = () => {
             value={values.businessName}
             onChange={handleChange("businessName")}
             error={touched.businessName && Boolean(errors.businessName)}
-            helperText={touched.businessName && errors.businessName}
+            helperText={Boolean(errors.businessName) && errors.businessName}
           />
           <TextField
             fullWidth
@@ -182,7 +186,7 @@ export const AddADV = () => {
             value={values.businessUrl}
             onChange={handleChange("businessUrl")}
             error={touched.businessUrl && Boolean(errors.businessUrl)}
-            helperText={touched.businessUrl && errors.businessUrl}
+            helperText={Boolean(errors.businessUrl) && errors.businessUrl}
           />
           <div style={{ margin: "35px 0" }}>
             <input
@@ -198,11 +202,21 @@ export const AddADV = () => {
                 <i class="fa fa-upload mr-2"></i>
               </label>
             </div>
-            {selectedImage && (
+            {selectedImage ? (
               <div style={{}}>
                 <img src={selectedImage} style={{ height: 250, width: 250 }} />
               </div>
+            ) : (
+              showImagepatrh && (
+                <div style={{}}>
+                  <img
+                    src={`${BaseImageURL}/${info.imagePath}`}
+                    style={{ height: 250, width: 250 }}
+                  />
+                </div>
+              )
             )}
+            {errors.imageFile && <p style={{ fontSize: 12 }}>Required</p>}
           </div>
 
           <TextField
@@ -214,6 +228,10 @@ export const AddADV = () => {
             placeholder="Enter your image Description"
             value={values.imageDescription}
             onChange={handleChange("imageDescription")}
+            error={touched.imageDescription && Boolean(errors.imageDescription)}
+            helperText={
+              Boolean(errors.imageDescription) && errors.imageDescription
+            }
           />
 
           <TextField
@@ -225,6 +243,8 @@ export const AddADV = () => {
             placeholder="Enter year"
             value={values.year}
             onChange={handleChange("year")}
+            error={touched.year && Boolean(errors.year)}
+            helperText={Boolean(errors.year) && errors.year}
           />
 
           <Button

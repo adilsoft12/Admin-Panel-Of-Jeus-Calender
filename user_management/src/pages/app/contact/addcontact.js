@@ -126,7 +126,8 @@ export const Addcontact = () => {
   }, [info]);
 
 
- 
+
+
   return (
     <Grid>
       <Paper elevation={0} style={paperStyle}>
@@ -145,7 +146,7 @@ export const Addcontact = () => {
             value={values.productName}
             onChange={handleChange("productName")}
             error={touched.productName && Boolean(errors.productName)}
-            helperText={touched.productName && errors.productName}
+            helperText={Boolean(errors.productName) && errors.productName}
            />
 
             <TextField
@@ -157,8 +158,8 @@ export const Addcontact = () => {
             placeholder="Enter your Website1"
             value={values.website1}
             onChange={handleChange("website1")}
-            error={touched.website1 && Boolean(errors.website1)}
-            helperText={touched.website1 && errors.website1}
+            // error={touched.website1 && Boolean(errors.website1)}
+            // helperText={Boolean(errors.website1) && errors.website1}
           />
 
             <TextField
@@ -170,8 +171,8 @@ export const Addcontact = () => {
             placeholder="Enter your Website2"
             value={values.website2}
             onChange={handleChange("website2")}
-            error={touched.website2 && Boolean(errors.website2)}
-            helperText={touched.website2 && errors.website2}
+            // error={touched.website2 && Boolean(errors.website2)}
+            // helperText={touched.website2 && errors.website2}
           />
            <TextField
             fullWidth
@@ -182,8 +183,8 @@ export const Addcontact = () => {
             placeholder="Enter your Website3"
             value={values.website3}
             onChange={handleChange("website3")}
-            error={touched.website3 && Boolean(errors.website3)}
-            helperText={touched.website3 && errors.website3}
+            // error={touched.website3 && Boolean(errors.website3)}
+            // helperText={touched.website3 && errors.website3}
           />
 
         
@@ -196,6 +197,8 @@ export const Addcontact = () => {
             placeholder="Enter your Contact Address"
             value={values.address}
             onChange={handleChange("address")}
+            error={touched.address && Boolean(errors.address)}
+            helperText={ Boolean(errors.address) && errors.address}
           />
 
           <TextField
@@ -208,7 +211,7 @@ export const Addcontact = () => {
             value={values.mobileNo}
             onChange={handleChange("mobileNo")}
             error={touched.mobileNo && Boolean(errors.mobileNo)}
-            helperText={touched.mobileNo && errors.mobileNo}
+            helperText={ Boolean(errors.mobileNo) && errors.mobileNo}
           />
           <TextField
             fullWidth
@@ -220,7 +223,7 @@ export const Addcontact = () => {
             value={values.phone}
             onChange={handleChange("phone")}
             error={touched.phone && Boolean(errors.phone)}
-            helperText={touched.phone && errors.phone}
+            helperText={Boolean(errors.phone) && errors.phone}
           />
         
            <TextField
@@ -233,7 +236,7 @@ export const Addcontact = () => {
             value={values.email}
             onChange={handleChange("email")}
             error={touched.email && Boolean(errors.email)}
-            helperText={touched.email && errors.email}
+            helperText={Boolean(errors.email) && errors.email}
           />
 
           <Button

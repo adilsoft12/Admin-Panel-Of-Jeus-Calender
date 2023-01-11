@@ -6,14 +6,20 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import * as Yup from "yup";
 
 export const AddBanner = () => {
   const location = useLocation();
   const [id, setId] = useState(0);
   const [info, setInfo] = useState([]);
   const [isLoading, setLoading] = useState(false);
-  const [selectedImage , setSelectedImage] = useState("")
+  const [selectedImage, setSelectedImage] = useState("");
   const history = useHistory();
+
+  const AddBannerValidation = Yup.object().shape({
+    bannerPublishedYear: Yup.number().required("Required"),
+    bannerImage: Yup.string().required("Required"),
+  });
 
   useEffect(() => {
     const tempArray = location.pathname?.split("/");
@@ -41,9 +47,7 @@ export const AddBanner = () => {
     align: "center",
   };
 
-
   async function makePostRequest(queryObj) {
- 
     setLoading(true);
     try {
       const data = {
@@ -54,7 +58,9 @@ export const AddBanner = () => {
       };
       if (id) {
         const response = await axiosInstance.post(
-          `http://jewcalendar-001-site1.btempurl.com/api/Banner/edit`, data );
+          `http://jewcalendar-001-site1.btempurl.com/api/Banner/edit`,
+          data
+        );
         if (response.data.message === "Banner Updated") {
           setLoading(false);
           history.push("/banner");
@@ -80,7 +86,7 @@ export const AddBanner = () => {
       bannerImageURL: "",
       bannerPublishedYear: "",
     },
-    // validationSchema: SignupSchema,
+    validationSchema: AddBannerValidation,
     onSubmit: (values) => {
       const queryObj = {
         bannerImage: values.bannerImage,
@@ -114,9 +120,12 @@ export const AddBanner = () => {
   const onHandleUpload = (event) => {
     getBase64(event.currentTarget.files[0], (result) => {
       setFieldValue("bannerImage", result.split(",")[1]);
-      setSelectedImage(result)
+      setSelectedImage(result);
     });
   };
+
+  const BaseImageURL = "http://jewcalendar-001-site1.btempurl.com/";
+  const showBanner = Boolean(info.bannerImage);
 
   return (
     <Grid>
@@ -135,7 +144,12 @@ export const AddBanner = () => {
             placeholder="Banner Publish Year"
             value={values.bannerPublishedYear}
             onChange={handleChange("bannerPublishedYear")}
-           
+            error={
+              touched.bannerPublishedYear && Boolean(errors.bannerPublishedYear)
+            }
+            helperText={
+              Boolean(errors.bannerPublishedYear) && errors.bannerPublishedYear
+            }
           />
 
           <div style={{ margin: "35px 0" }}>
@@ -152,10 +166,22 @@ export const AddBanner = () => {
                 <i class="fa fa-upload mr-2"></i>
               </label>
             </div>
-            {selectedImage && (
+            {selectedImage ? (
               <div style={{}}>
                 <img src={selectedImage} style={{ height: 250, width: 250 }} />
               </div>
+            ) : (
+              showBanner && (
+                <div style={{}}>
+                  <img
+                    src={`${BaseImageURL}/${info.bannerImage}`}
+                    style={{ height: 250, width: 250 }}
+                  />
+                </div>
+              )
+            )}
+            {!selectedImage && errors.imageFile && (
+              <p style={{ fontSize: 12 }}>Required</p>
             )}
           </div>
           <Button

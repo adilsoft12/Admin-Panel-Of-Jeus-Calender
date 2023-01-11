@@ -41,7 +41,7 @@ export function UpcomingeventDetail() {
 
   return (
     <AppConainer>
-      <Paper elevation={3} sx={{ marginLeft: "200px" }}>
+      <Paper elevation={3} sx={{ marginLeft: "100px" }}>
         <Grid
           style={{
             display: "flex",
@@ -56,6 +56,7 @@ export function UpcomingeventDetail() {
               paddingBottom: "20px",
               paddingLeft: "19px",
               paddingRight: "20px",
+              height:'auto'
             }}
           >
             <h1 className="titr-font" style={{ textAlign: "center" }}>

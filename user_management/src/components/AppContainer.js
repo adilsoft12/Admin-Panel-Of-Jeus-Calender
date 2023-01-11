@@ -264,7 +264,6 @@ export const AppConainer = ({
       const response = await fetch(
         `http://172.119.151.139:80/api/UserLogin/logout/${data.id}`,
         {
-          // const response = await fetch(`https://localhost:44308/api/UserLogin/logout/${data.id}`, {
           method: "POST",
           headers: {
             CompanyId: 1,
@@ -432,6 +431,8 @@ export const AppConainer = ({
       }
     });
 
+
+   
     const getAccessScreensJwes = screenByRole.screens?.map((listScreen) => {
       if (listScreen.type === "JewsCalendar") {
         return (
@@ -462,6 +463,9 @@ export const AppConainer = ({
       }
     });
 
+
+
+console.log("listDataShow", {openDarwar, jwestabOpen})
     return (
       <>
         <ListItemButton onClick={onHandleList}>
