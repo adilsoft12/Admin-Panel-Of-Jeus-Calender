@@ -67,6 +67,10 @@ export const AddUpcomingEvent = () => {
       .min(2, "Too Short!")
       .max(50, "Too Long!")
       .required("Required"),
+      eventDescriptionPrivate: Yup.string()
+      .min(2, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Required"),
     ticketWebsiteUrl: Yup.string()
       .min(2, "Too Short!")
       .max(50, "Too Long!")
@@ -105,6 +109,7 @@ export const AddUpcomingEvent = () => {
       setFieldValue("flyer", info.flyer);
       setFieldValue("flyerPath", info.flyerPath);
       setFieldValue("eventDescription", info.eventDescription);
+      setFieldValue("eventDescriptionPrivate", info.eventDescriptionPrivate);
       setFieldValue("ticketWebsiteUrl", info.ticketWebsiteUrl);
     }
   }, [info]);
@@ -143,6 +148,7 @@ export const AddUpcomingEvent = () => {
         flyer: queryObj?.flyer,
         flyerPath: queryObj?.flyerPath,
         eventDescription: queryObj?.eventDescription,
+        eventDescriptionPrivate: queryObj?.eventDescriptionPrivate,
         ticketWebsiteUrl: queryObj?.ticketWebsiteUrl,
       };
       if (id) {
@@ -185,6 +191,7 @@ export const AddUpcomingEvent = () => {
       flyer: "",
       // flyerPath: "",
       eventDescription: "",
+      eventDescriptionPrivate: "",
       ticketWebsiteUrl: "",
     },
 
@@ -204,6 +211,7 @@ export const AddUpcomingEvent = () => {
         flyer: values.flyer,
         flyerPath: "",
         eventDescription: values.eventDescription,
+        eventDescriptionPrivate: values.eventDescriptionPrivate,
         ticketWebsiteUrl: values.ticketWebsiteUrl,
       };
       makePostRequest(queryObj);
@@ -418,6 +426,20 @@ export const AddUpcomingEvent = () => {
             value={values.eventDescription}
             onChange={handleChange("eventDescription")}
             error={touched.eventDescription && Boolean(errors.eventDescription)}
+            helperText={
+              Boolean(errors.eventDescription) && errors.eventDescription
+            }
+          />{" "}
+             <TextField
+            fullWidth
+            sx={{ mt: 3 }}
+            id="eventDescriptionPrivate"
+            name=" eventDescriptionPrivate"
+            label="  Event Description Private"
+            placeholder="Please Enter Private Event Description"
+            value={values.eventDescriptionPrivate}
+            onChange={handleChange("eventDescriptionPrivate")}
+            error={touched.eventDescriptionPrivate && Boolean(errors.eventDescriptionPrivate)}
             helperText={
               Boolean(errors.eventDescription) && errors.eventDescription
             }

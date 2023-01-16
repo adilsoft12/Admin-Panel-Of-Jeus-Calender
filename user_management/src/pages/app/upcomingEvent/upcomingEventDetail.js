@@ -317,13 +317,20 @@ export function UpcomingeventDetail() {
                 </Grid>
                 <Grid item xs={4}>
                   <Typography className="BBCNassim-font" sx={{ fontSize: 20 }}>
+                    <a style={{ fontWeight: "bold", marginRight: "20px" }}>
+                    Event Description Private:
+                    </a>
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography className="BBCNassim-font" sx={{ fontSize: 20 }}>
                   :
                   </Typography>
                 </Grid>
 
                 <Grid item xs={4}>
                   <Typography className="BBCNassim-font" sx={{ fontSize: 20 }}>
-                    {info.eventDescription}
+                    {info.eventDescriptionPrivate}
                   </Typography>
                 </Grid>
               </Grid>

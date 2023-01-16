@@ -243,6 +243,7 @@ export const UpcomingEvent = () => {
                 <StyledTableCell>OraniserName</StyledTableCell>
                 <StyledTableCell>Flyer</StyledTableCell>
                 <StyledTableCell>EventDescription</StyledTableCell>
+                <StyledTableCell>EventDescriptionPrivate</StyledTableCell>
                 <StyledTableCell>TicketWebsiteUrl</StyledTableCell>
 
                 {/* <StyledTableCell align="start">File URL</StyledTableCell> */}
@@ -349,6 +350,13 @@ export const UpcomingEvent = () => {
                       scope="row"
                     >
                       {item.eventDescription}
+                    </StyledTableCell>{" "}
+                    <StyledTableCell
+                      sx={{ textAlign: "start" }}
+                      component="th"
+                      scope="row"
+                    >
+                      {item.eventDescriptionPrivate}
                     </StyledTableCell>{" "}
                     <StyledTableCell
                       sx={{ textAlign: "start" }}
