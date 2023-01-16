@@ -173,15 +173,12 @@ export const AddBanner = () => {
             ) : (
               showBanner && (
                 <div style={{}}>
-                  <img
-                    src={`${BaseImageURL}/${info.bannerImage}`}
-                    style={{ height: 250, width: 250 }}
-                  />
+                  <img  src={`${BaseImageURL}/${info.bannerImage}`}  style={{ height: 250, width: 250 }}  />
                 </div>
               )
             )}
             {!selectedImage && errors.imageFile && (
-              <p style={{ fontSize: 12 }}>Required</p>
+              <p style={{ fontSize: 12 , backgroundColor:'red' }}>Required</p>
             )}
           </div>
           <Button

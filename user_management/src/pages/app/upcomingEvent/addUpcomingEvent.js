@@ -287,8 +287,8 @@ export const AddUpcomingEvent = () => {
             sx={{ mt: 3 }}
             id="eventTypePersian"
             name=" eventTypePersian"
-            label=" eventTypePersian"
-            placeholder="eventTypePersian"
+            label=" Event TypePersian"
+            placeholder="Please Enter Event Type Persian"
             value={values.eventTypePersian}
             onChange={handleChange("eventTypePersian")}
             error={touched.eventTypePersian && Boolean(errors.eventTypePersian)}
@@ -299,8 +299,8 @@ export const AddUpcomingEvent = () => {
             sx={{ mt: 3 }}
             id="eventTypeEnglish"
             name=" eventTypeEnglish"
-            label=" eventTypeEnglish"
-            placeholder="eventTypeEnglish"
+            label="Event TypeEnglish"
+            placeholder="Please Enter Event Type English"
             value={values.eventTypeEnglish}
             onChange={handleChange("eventTypeEnglish")}
             error={touched.eventTypeEnglish && Boolean(errors.eventTypeEnglish)}
@@ -313,8 +313,8 @@ export const AddUpcomingEvent = () => {
             sx={{ mt: 3 }}
             id="eventNamePersian"
             name=" eventNamePersian"
-            label=" eventNamePersian"
-            placeholder="eventNamePersian"
+            label="Event Name Persian"
+            placeholder="Please Enter Event NamePersian"
             value={values.eventNamePersian}
             onChange={handleChange("eventNamePersian")}
             error={touched.eventNamePersian && Boolean(errors.eventNamePersian)}
@@ -327,8 +327,8 @@ export const AddUpcomingEvent = () => {
             sx={{ mt: 3 }}
             id="eventNameEnglish"
             name=" eventNameEnglish"
-            label=" eventNameEnglish"
-            placeholder="eventNameEnglish"
+            label=" Event Name English"
+            placeholder="Please Enter  Event Name English"
             value={values.eventNameEnglish}
             onChange={handleChange("eventNameEnglish")}
             error={touched.eventNameEnglish && Boolean(errors.eventNameEnglish)}
@@ -341,8 +341,8 @@ export const AddUpcomingEvent = () => {
             sx={{ mt: 3 }}
             id="address"
             name=" address"
-            label=" address"
-            placeholder="address"
+            label="Address"
+            placeholder="Please Enter Address"
             value={values.address}
             onChange={handleChange("address")}
             error={touched.address && Boolean(errors.address)}
@@ -352,9 +352,9 @@ export const AddUpcomingEvent = () => {
             fullWidth
             sx={{ mt: 3 }}
             id="phoneNumber"
-            name=" phoneNumber"
-            label=" phoneNumber"
-            placeholder="phoneNumber"
+            name="phoneNumber"
+            label="PhoneNumber"
+            placeholder="Please Enter PhoneNumber"
             value={values.phoneNumber}
             onChange={handleChange("phoneNumber")}
             error={touched.phoneNumber && Boolean(errors.phoneNumber)}
@@ -365,8 +365,8 @@ export const AddUpcomingEvent = () => {
             sx={{ mt: 3 }}
             id="email"
             name=" email"
-            label=" email"
-            placeholder="email"
+            label=" Email"
+            placeholder="Please Enter Email"
             value={values.email}
             onChange={handleChange("email")}
             error={touched.email && Boolean(errors.email)}
@@ -377,8 +377,8 @@ export const AddUpcomingEvent = () => {
             sx={{ mt: 3 }}
             id="website"
             name=" website"
-            label=" website"
-            placeholder="website"
+            label="Website"
+            placeholder="Please Enter Website"
             value={values.website}
             onChange={handleChange("website")}
             error={touched.website && Boolean(errors.website)}
@@ -389,8 +389,8 @@ export const AddUpcomingEvent = () => {
             sx={{ mt: 3 }}
             id="ticketPrice"
             name=" ticketPrice"
-            label=" ticketPrice"
-            placeholder="ticketPrice"
+            label=" Ticket Price"
+            placeholder="Please Enter Ticket Price "
             value={values.ticketPrice}
             onChange={handleChange("ticketPrice")}
             error={touched.ticketPrice && Boolean(errors.ticketPrice)}
@@ -401,8 +401,8 @@ export const AddUpcomingEvent = () => {
             sx={{ mt: 3 }}
             id="oraniserName"
             name=" oraniserName"
-            label=" oraniserName"
-            placeholder="oraniserName"
+            label=" Organizer"
+            placeholder="Enter Organizer Name"
             value={values.oraniserName}
             onChange={handleChange("oraniserName")}
             error={touched.oraniserName && Boolean(errors.oraniserName)}
@@ -413,8 +413,8 @@ export const AddUpcomingEvent = () => {
             sx={{ mt: 3 }}
             id="eventDescription"
             name=" eventDescription"
-            label=" eventDescription"
-            placeholder="eventDescription"
+            label="  Event Description"
+            placeholder="Please Enter Event Description"
             value={values.eventDescription}
             onChange={handleChange("eventDescription")}
             error={touched.eventDescription && Boolean(errors.eventDescription)}
@@ -427,8 +427,8 @@ export const AddUpcomingEvent = () => {
             sx={{ mt: 3 }}
             id="ticketWebsiteUrl"
             name=" ticketWebsiteUrl"
-            label=" ticketWebsiteUrl"
-            placeholder="ticketWebsiteUrl"
+            label="Ticket Website url"
+            placeholder="Please Enter Ticket Website url"
             value={values.ticketWebsiteUrl}
             onChange={handleChange("ticketWebsiteUrl")}
             error={touched.ticketWebsiteUrl && Boolean(errors.ticketWebsiteUrl)}

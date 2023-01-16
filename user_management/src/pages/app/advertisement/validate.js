@@ -19,6 +19,6 @@ export const validationSchema = yup.object().shape({
     .required("Required"),
 
   imageDescription: yup.string().typeError("Image Description").required("Required"),
-  imageFile: yup.string(),
+  imageFile: yup.string().required("Required"),
   
 });

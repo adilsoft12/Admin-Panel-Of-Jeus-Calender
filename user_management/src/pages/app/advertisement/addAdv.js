@@ -1,5 +1,6 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useState, useEffect } from "react";
-import { Grid, Paper, TextField, Button } from "@mui/material";
+import { Grid,  TextField, Button } from "@mui/material";
 import { useFormik } from "formik";
 import { axiosInstance } from "../../../services/axiosInstance";
 import { API_ENDPOINTS_ADV } from "../../../services/api_url";
@@ -8,6 +9,7 @@ import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import { validationSchema } from "./validate";
+import FormHelperText from "@mui/material/FormHelperText";
 import "./index.css";
 
 export const AddADV = () => {
@@ -18,16 +20,7 @@ export const AddADV = () => {
   const [isLoading, setLoading] = useState(false);
   const history = useHistory();
 
-  // // const testYear =  info?.year.toString();
-  // console.log("testYear",testYear)
-
-  const paperStyle = {
-    width: 900,
-    marginLeft: "270px",
-    paddingTop: "5px",
-  };
-
-  // const headerStyle = { margin: 0, }
+  
 
   useEffect(() => {
     const tempArray = location.pathname?.split("/");
@@ -50,8 +43,7 @@ export const AddADV = () => {
 
   async function makePostRequest(queryObj) {
     setLoading(true);
-    console.log("ListofData", queryObj);
-
+   
     try {
       const data = {
         id: Number(id || 0),
@@ -99,7 +91,6 @@ export const AddADV = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log("first", formik.errors);
       const queryObj = {
         businessName: values.businessName,
         imageFile: values.imageFile,
@@ -109,13 +100,10 @@ export const AddADV = () => {
         year: values.year,
       };
       makePostRequest(queryObj);
-      console.log("value of the year----->", values.year);
     },
   });
-  // console.log("value of the year----->",values.year)
-  const { handleChange, handleSubmit, setFieldValue, values, errors, touched } =
-    formik;
-
+  
+  const { handleChange, handleSubmit, setFieldValue, values, errors, touched , handleBlur} = formik;
   useEffect(() => {
     if (info) {
       setFieldValue("businessName", info.businessName);
@@ -139,20 +127,20 @@ export const AddADV = () => {
   };
 
   const handleImage = (event) => {
-    console.log("eventList", event);
     getBase64(event.currentTarget.files[0], (result) => {
       setFieldValue("imageFile", result.split(",")[1]);
       setSelectedImage(result);
     });
   };
 
+  console.log("infoData", info);
   console.log("LIstData>>>", { errors, touched });
 
-  console.log("infoData", info);
+ 
   const BaseImageURL = "http://jewcalendar-001-site1.btempurl.com/";
   const showImagepatrh = Boolean(info.imagePath);
+ 
 
-  // console.log("value of the year----->",values.year)
   return (
     <Grid>
       <div
@@ -172,21 +160,25 @@ export const AddADV = () => {
             label=" business Name"
             placeholder="Enter your  business Name"
             value={values.businessName}
+            onBlur={handleBlur}
             onChange={handleChange("businessName")}
             error={touched.businessName && Boolean(errors.businessName)}
-            helperText={Boolean(errors.businessName) && errors.businessName}
+            helperText={ Boolean(errors.businessName) && errors.businessName }
           />
+        
+
           <TextField
             fullWidth
             sx={{ mt: 3 }}
             id="businessUrl"
             name=" businessUrl"
             label=" businessUrl"
+            onBlur={handleBlur}
             placeholder="Enter your  businessUrl"
             value={values.businessUrl}
             onChange={handleChange("businessUrl")}
             error={touched.businessUrl && Boolean(errors.businessUrl)}
-            helperText={Boolean(errors.businessUrl) && errors.businessUrl}
+            helperText={Boolean(errors.businessUrl) &&  errors.businessUrl}
           />
           <div style={{ margin: "35px 0" }}>
             <input
@@ -216,6 +208,7 @@ export const AddADV = () => {
                 </div>
               )
             )}
+           
             {errors.imageFile && <p style={{ fontSize: 12 }}>Required</p>}
           </div>
 
@@ -227,6 +220,7 @@ export const AddADV = () => {
             label="image Description"
             placeholder="Enter your image Description"
             value={values.imageDescription}
+            onBlur={handleBlur}
             onChange={handleChange("imageDescription")}
             error={touched.imageDescription && Boolean(errors.imageDescription)}
             helperText={
@@ -241,6 +235,7 @@ export const AddADV = () => {
             name="year"
             label="year"
             placeholder="Enter year"
+            onBlur={handleBlur}
             value={values.year}
             onChange={handleChange("year")}
             error={touched.year && Boolean(errors.year)}
