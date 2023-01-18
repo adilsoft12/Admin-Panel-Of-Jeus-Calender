@@ -10,18 +10,9 @@ import { AppConainer } from "../../../components";
 
 export function UpcomingeventDetail() {
   const history = useHistory();
-  const [id, setId] = useState([]);
   const [info, setInfo] = useState([]);
   const location = useLocation();
 
-  const headerStyle = { margin: 0 };
-  const paperStyle = {
-    padding: "40px 30px 50px 20px",
-    width: 700,
-    margin: "20px auto",
-    align: "center",
-    height: "500px",
-  };
 
   useEffect(() => {
     const temp = location.pathname.split("/");
@@ -303,6 +294,7 @@ export function UpcomingeventDetail() {
                   </Typography>
                 </Grid>
               </Grid>
+        
               <Grid
                 container
                 rowSpacing={2}
@@ -327,6 +319,33 @@ export function UpcomingeventDetail() {
                   </Typography>
                 </Grid>
               </Grid>
+
+              <Grid
+                container
+                rowSpacing={2}
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              >
+                <Grid item xs={4}>
+                  <Typography className="BBCNassim-font" sx={{ fontSize: 20 }}>
+                    <a style={{ fontWeight: "bold", marginRight: "20px" }}>
+                    EventDescriptionPrivate:
+                    </a>
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography className="BBCNassim-font" sx={{ fontSize: 20 }}>
+                  :
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={4}>
+                  <Typography className="BBCNassim-font" sx={{ fontSize: 20 }}>
+                    {info.eventDescriptionPrivate}
+                  </Typography>
+                </Grid>
+              </Grid>
+
+          
               <Grid
                 container
                 rowSpacing={2}

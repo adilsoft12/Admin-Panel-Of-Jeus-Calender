@@ -67,6 +67,10 @@ export const AddUpcomingEvent = () => {
       .min(2, "Too Short!")
       .max(50, "Too Long!")
       .required("Required"),
+      eventDescriptionPrivate: Yup.string()
+      .min(2, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Required"),
     ticketWebsiteUrl: Yup.string()
       .min(2, "Too Short!")
       .max(50, "Too Long!")
@@ -106,6 +110,7 @@ export const AddUpcomingEvent = () => {
       setFieldValue("flyerPath", info.flyerPath);
       setFieldValue("eventDescription", info.eventDescription);
       setFieldValue("ticketWebsiteUrl", info.ticketWebsiteUrl);
+      setFieldValue("eventDescriptionPrivate",info.eventDescriptionPrivate )
     }
   }, [info]);
 
@@ -143,6 +148,7 @@ export const AddUpcomingEvent = () => {
         flyer: queryObj?.flyer,
         flyerPath: queryObj?.flyerPath,
         eventDescription: queryObj?.eventDescription,
+        eventDescriptionPrivate:queryObj.eventDescriptionPrivate,
         ticketWebsiteUrl: queryObj?.ticketWebsiteUrl,
       };
       if (id) {
@@ -155,10 +161,7 @@ export const AddUpcomingEvent = () => {
           history.push("/upcomingevent");
         }
       } else {
-        const response = await axiosInstance.post(
-          `${API_ENDPOINTS_UpcomingEvent.Add_Upcoming_Event}`,
-          data
-        );
+        const response = await axiosInstance.post(`${API_ENDPOINTS_UpcomingEvent.Add_Upcoming_Event}`, data  );
         if (response.data.message === "UpcomingEvent Added") {
           setLoading(false);
           history.push("/upcomingevent");
@@ -186,6 +189,7 @@ export const AddUpcomingEvent = () => {
       // flyerPath: "",
       eventDescription: "",
       ticketWebsiteUrl: "",
+      eventDescriptionPrivate:""
     },
 
     validationSchema: UpcomingeventsSchema,
@@ -204,6 +208,7 @@ export const AddUpcomingEvent = () => {
         flyer: values.flyer,
         flyerPath: "",
         eventDescription: values.eventDescription,
+        eventDescriptionPrivate: values.eventDescriptionPrivate,
         ticketWebsiteUrl: values.ticketWebsiteUrl,
       };
       makePostRequest(queryObj);
@@ -228,8 +233,6 @@ export const AddUpcomingEvent = () => {
       setSelectedImage(result);
     });
   };
-
- 
 
  
   
@@ -420,6 +423,20 @@ export const AddUpcomingEvent = () => {
             error={touched.eventDescription && Boolean(errors.eventDescription)}
             helperText={
               Boolean(errors.eventDescription) && errors.eventDescription
+            }
+          />{" "}
+           <TextField
+            fullWidth
+            sx={{ mt: 3 }}
+            id="eventDescription"
+            name=" eventDescription"
+            label="Event Description Private"
+            placeholder="Please Enter Event Description Private"
+            value={values.eventDescriptionPrivate}
+            onChange={handleChange("eventDescriptionPrivate")}
+            error={touched.eventDescriptionPrivate && Boolean(errors.eventDescriptionPrivate)}
+            helperText={
+              Boolean(errors.eventDescriptionPrivate) && errors.eventDescriptionPrivate
             }
           />{" "}
           <TextField

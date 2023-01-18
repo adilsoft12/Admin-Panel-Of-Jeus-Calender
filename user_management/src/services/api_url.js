@@ -1,6 +1,8 @@
 export const API_BASE_URL = "http://jewcalendar-001-site1.btempurl.com/api";
 export const IMG_BASE_URL = "http://jewcalendar-001-site1.btempurl.com/";
 
+
+
 export const API_ENDPOINTS_ADV = {
   add_adv: "/Advertisement/Add-Advertisement",
   edit_adv: "/Advertisement/Update-Advertisement",

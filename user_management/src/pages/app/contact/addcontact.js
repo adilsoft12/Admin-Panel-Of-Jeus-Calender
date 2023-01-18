@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Paper, TextField, Button } from "@mui/material";
-import * as yup from "yup";
 import { useFormik } from "formik";
-import {API_ENDPOINTS_Contact} from '../../../services/api_url';
+import { API_ENDPOINTS_Contact } from "../../../services/api_url";
 import { axiosInstance } from "../../../services/axiosInstance";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import Box from "@mui/material/Box";
 import { useHistory } from "react-router-dom";
-import {validationSchema} from '../contact/validate';
+import { validationSchema } from "../contact/validate";
 
 export const Addcontact = () => {
   const location = useLocation();
-  const [id, setId] = useState(0);
+  const [ids, setId] = useState(0);
   const [info, setInfo] = useState([]);
-  const history = useHistory();
+  const [inputField, setInputfield] = useState([
+    { type: "", number: "", status:"", id:crypto.randomUUID()},
+  ]);
 
- 
+  const history = useHistory();
 
   const paperStyle = {
     padding: "40px 30px 50px 25px",
@@ -31,14 +29,12 @@ export const Addcontact = () => {
 
   const headerStyle = { margin: 0 };
 
-
   useEffect(() => {
     const tempArray = location.pathname?.split("/");
     setId(tempArray?.[2]);
 
     if (tempArray?.[2]) {
       fetchDetails(tempArray?.[2]);
-      console.log("id------->",id)
     }
   }, []);
 
@@ -47,17 +43,14 @@ export const Addcontact = () => {
       `http://jewcalendar-001-site1.btempurl.com/api/Contact/GetBy-ID?Id=${data}`
     );
     setInfo(result.data);
-    console.log("result.data",result.data)
-    
   };
 
   const AddCnt = async (data) => {
-    // console.log({data})
     const result = await axios.post(
       "http://jewcalendar-001-site1.btempurl.com/api/Contact/Add",
-      data    
+      data
     );
-    console.log("result.data",result.data);
+    console.log("result.data", result);
     if (result.data.message === "Added") {
       history.push("/contact");
     }
@@ -72,8 +65,7 @@ export const Addcontact = () => {
     }
   };
 
-
- 
+  
 
   const formik = useFormik({
     initialValues: {
@@ -82,26 +74,28 @@ export const Addcontact = () => {
       website2: "",
       website3: "",
       address: "",
-      mobileNo: "",
-      phone: "",
       email: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      const listInputfield = inputField.map((i) => ({
+          id: 0,
+          contactId: 0,
+          type: i.type,
+          number: i.number,
+          status: ""
+      }))
       const queryObj = {
-        id: Number(id || 0),
+        id: Number(ids || 0),
         productName: values.productName,
         website1: values.website1,
         website2: values.website2,
         website3: values.website3,
         address: values.address,
-        mobileNo:parseInt(values.mobileNo)   ,
-        phone: parseInt(values.phone) ,
+        number: listInputfield,
         email: values.email,
       };
-      
-      console.log("queryObj",queryObj)
-      if (id) {
+      if (ids) {
         updateContact(queryObj);
       } else {
         AddCnt(queryObj);
@@ -109,9 +103,18 @@ export const Addcontact = () => {
     },
   });
 
+  const onHandleClick = () => {
+    setInputfield([
+      ...inputField,
+      { type: "", number: "",status:"", id: crypto.randomUUID() },
+    ]);
+  };
+
+  console.log("inputField>>>", inputField);
+
   const { handleChange, handleSubmit, setFieldValue, values, errors, touched } =
-  formik;
-  console.log({errors})
+    formik;
+  console.log({ errors });
   useEffect(() => {
     if (info) {
       setFieldValue("productName", info.productName);
@@ -125,18 +128,37 @@ export const Addcontact = () => {
     }
   }, [info]);
 
+  const onHandleNumber = (id) => (e) => {
+    console.log("IDLIst", id)
+    const { value, name } = e.target;
+    const inputFieldList = inputField.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          [name]: value,
+        };
+      }
+      return item;
+    });
+    setInputfield(inputFieldList);
+  };
 
-
+  const onHandleRemove = (id)=>{
+    const list =[...inputField]  
+    list.splice(id,1)
+    setInputfield(list)
+  }
+  console.log("ListInputFiled", inputField);
 
   return (
     <Grid>
       <Paper elevation={0} style={paperStyle}>
-        <Grid align="center" sx={{mt : 3}}>
-          <h2 style={headerStyle}>{id ? "Update" : "Add New"} Contact</h2>
+        <Grid align="center" sx={{ mt: 3 }}>
+          <h2 style={headerStyle}>{ids ? "Update" : "Add New"} Contact</h2>
         </Grid>
-       
+
         <form onSubmit={handleSubmit}>
-           <TextField
+          <TextField
             fullWidth
             sx={{ mt: 3 }}
             id="productName"
@@ -147,9 +169,9 @@ export const Addcontact = () => {
             onChange={handleChange("productName")}
             error={touched.productName && Boolean(errors.productName)}
             helperText={Boolean(errors.productName) && errors.productName}
-           />
+          />
 
-            <TextField
+          <TextField
             fullWidth
             sx={{ mt: 3 }}
             id="website1"
@@ -158,11 +180,9 @@ export const Addcontact = () => {
             placeholder="Enter your Website1"
             value={values.website1}
             onChange={handleChange("website1")}
-            // error={touched.website1 && Boolean(errors.website1)}
-            // helperText={Boolean(errors.website1) && errors.website1}
           />
 
-            <TextField
+          <TextField
             fullWidth
             sx={{ mt: 3 }}
             id="website2"
@@ -171,10 +191,8 @@ export const Addcontact = () => {
             placeholder="Enter your Website2"
             value={values.website2}
             onChange={handleChange("website2")}
-            // error={touched.website2 && Boolean(errors.website2)}
-            // helperText={touched.website2 && errors.website2}
           />
-           <TextField
+          <TextField
             fullWidth
             sx={{ mt: 3 }}
             id="website3"
@@ -183,11 +201,8 @@ export const Addcontact = () => {
             placeholder="Enter your Website3"
             value={values.website3}
             onChange={handleChange("website3")}
-            // error={touched.website3 && Boolean(errors.website3)}
-            // helperText={touched.website3 && errors.website3}
           />
 
-        
           <TextField
             fullWidth
             sx={{ mt: 3 }}
@@ -198,10 +213,10 @@ export const Addcontact = () => {
             value={values.address}
             onChange={handleChange("address")}
             error={touched.address && Boolean(errors.address)}
-            helperText={ Boolean(errors.address) && errors.address}
+            helperText={Boolean(errors.address) && errors.address}
           />
 
-          <TextField
+          {/* <TextField
             fullWidth
             sx={{ mt: 3 }}
             id="mobileNo"
@@ -211,22 +226,77 @@ export const Addcontact = () => {
             value={values.mobileNo}
             onChange={handleChange("mobileNo")}
             error={touched.mobileNo && Boolean(errors.mobileNo)}
-            helperText={ Boolean(errors.mobileNo) && errors.mobileNo}
-          />
+            helperText={Boolean(errors.mobileNo) && errors.mobileNo}
+          /> */}
+         
+          {inputField &&
+            inputField?.map((item, Index) => {
+              return (
+                <>
+                  <Grid container>
+                    <Select
+                      style={{
+                        width: "49%",
+                        marginRight: "8px",
+                        marginTop: "25px",
+                        height: "fit-content",
+                      }}
+                      labelId="demo-simple-select-helper-label"
+                      label="Age"
+                      name="type"
+                      value={item.type}
+                      id={item.id}
+                      onChange={onHandleNumber(item.id)}
+                    >
+                      <MenuItem value="Home">Home</MenuItem>
+                      <MenuItem value="Fax">Fax</MenuItem>
+                      <MenuItem value="Mobile">Mobile</MenuItem>
+                    </Select>
+
+                    <TextField
+                      disabled={item.id ? false : true}
+                      fullWidth
+                      sx={{ mt: 3, width: "50%" }}
+                      name="number"
+                      label="Number"
+                      placeholder="Enter your Phone"
+                      value={item.number}
+                      onChange={onHandleNumber(item.id)}
+                      id={item.id}
+                    />
+                    <div
+                      style={{
+                        paddingTop: 10,
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-evenly",
+                      }}
+                    >
+                      <div>
+                        {inputField.length - 1 === Index  && (
+                          <Button variant="contained" onClick={onHandleClick}>
+                            Add More
+                          </Button>
+                        )}
+                      </div>
+
+                      <div style={{ marginLeft: 10 }}>
+                        {inputField.length!== 1 && (
+                          <Button
+                            variant="contained"
+                            onClick={() => onHandleRemove(item.id)}
+                          >
+                            Remove
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </Grid>
+                </>
+              );
+            })}
+
           <TextField
-            fullWidth
-            sx={{ mt: 3 }}
-            id="phone"
-            name="phone"
-            label="Phone"
-            placeholder="Enter your Phone"
-            value={values.phone}
-            onChange={handleChange("phone")}
-            error={touched.phone && Boolean(errors.phone)}
-            helperText={Boolean(errors.phone) && errors.phone}
-          />
-        
-           <TextField
             fullWidth
             sx={{ mt: 3 }}
             id="email"
@@ -245,7 +315,6 @@ export const Addcontact = () => {
             variant="contained"
             color="primary"
             align="center"
-
           >
             Save
           </Button>
@@ -265,4 +334,3 @@ export const Addcontact = () => {
     </Grid>
   );
 };
-
