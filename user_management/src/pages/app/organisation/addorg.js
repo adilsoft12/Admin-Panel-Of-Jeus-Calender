@@ -148,7 +148,7 @@ console.log("tempArray------>",tempArray);
     }
   }, [info]);
 
-  console.log("VAlues>>>", { values, selectedcountries });
+  console.log("VAlues>>>", { values });
 
 
   console.log('ShowValue',{ errors, touched}  )

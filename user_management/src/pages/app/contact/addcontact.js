@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Paper, TextField, Button } from "@mui/material";
+import { Grid, Paper, TextField, Button, FormControl } from "@mui/material";
 import { useFormik } from "formik";
 import { API_ENDPOINTS_Contact } from "../../../services/api_url";
 import { axiosInstance } from "../../../services/axiosInstance";
@@ -9,15 +9,19 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { useHistory } from "react-router-dom";
 import { validationSchema } from "../contact/validate";
+import InputLabel from "@mui/material/InputLabel";
+import Box from "@mui/material/Box";
 
 export const Addcontact = () => {
   const location = useLocation();
-  const [ids, setId] = useState(0);
+  const [id, setId] = useState(0);
   const [info, setInfo] = useState([]);
   const [inputField, setInputfield] = useState([
-    { type: "", number: "", status:"", id:crypto.randomUUID()},
+    { type: "", number: "", status: "", id: crypto.randomUUID() },
   ]);
 
+
+  console.log("listValues", info)
   const history = useHistory();
 
   const paperStyle = {
@@ -39,9 +43,11 @@ export const Addcontact = () => {
   }, []);
 
   const fetchDetails = async (data) => {
+    console.log("DataShow", data)
     const result = await axios.post(
       `http://jewcalendar-001-site1.btempurl.com/api/Contact/GetBy-ID?Id=${data}`
     );
+    console.log("resultData", result)
     setInfo(result.data);
   };
 
@@ -50,7 +56,6 @@ export const Addcontact = () => {
       "http://jewcalendar-001-site1.btempurl.com/api/Contact/Add",
       data
     );
-    console.log("result.data", result);
     if (result.data.message === "Added") {
       history.push("/contact");
     }
@@ -65,8 +70,6 @@ export const Addcontact = () => {
     }
   };
 
-  
-
   const formik = useFormik({
     initialValues: {
       productName: "",
@@ -79,14 +82,14 @@ export const Addcontact = () => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       const listInputfield = inputField.map((i) => ({
-          id: 0,
-          contactId: 0,
-          type: i.type,
-          number: i.number,
-          status: ""
-      }))
+        id: 0,
+        contactId: 0,
+        type: i.type,
+        number: i.number,
+        status: "",
+      }));
       const queryObj = {
-        id: Number(ids || 0),
+        id: Number(id || 0),
         productName: values.productName,
         website1: values.website1,
         website2: values.website2,
@@ -95,7 +98,7 @@ export const Addcontact = () => {
         number: listInputfield,
         email: values.email,
       };
-      if (ids) {
+      if (id) {
         updateContact(queryObj);
       } else {
         AddCnt(queryObj);
@@ -106,7 +109,7 @@ export const Addcontact = () => {
   const onHandleClick = () => {
     setInputfield([
       ...inputField,
-      { type: "", number: "",status:"", id: crypto.randomUUID() },
+      { type: "", number: "", status: "", id: crypto.randomUUID() },
     ]);
   };
 
@@ -114,22 +117,22 @@ export const Addcontact = () => {
 
   const { handleChange, handleSubmit, setFieldValue, values, errors, touched } =
     formik;
-  console.log({ errors });
+  console.log("testingggg",{ errors });
   useEffect(() => {
     if (info) {
-      setFieldValue("productName", info.productName);
-      setFieldValue("website1", info.website1);
-      setFieldValue("website2", info.website2);
-      setFieldValue("website3", info.website3);
-      setFieldValue("address", info.address);
-      setFieldValue("mobileNo", info.mobileNo);
-      setFieldValue("phone", info.phone);
-      setFieldValue("email", info.email);
+      setFieldValue("productName", info[0]?.productName);
+      setFieldValue("website1", info[0]?.website1);
+      setFieldValue("website2", info[0]?.website2);
+      setFieldValue("website3", info[0]?.website3);
+      setFieldValue("address", info[0]?.address);
+      // setFieldValue("mobileNo", info.mobileNo);
+      // setFieldValue("phone", info.phone);
+      setFieldValue("email", info[0]?.email);
     }
   }, [info]);
 
   const onHandleNumber = (id) => (e) => {
-    console.log("IDLIst", id)
+    console.log("IDLIst", id);
     const { value, name } = e.target;
     const inputFieldList = inputField.map((item) => {
       if (item.id === id) {
@@ -143,18 +146,19 @@ export const Addcontact = () => {
     setInputfield(inputFieldList);
   };
 
-  const onHandleRemove = (id)=>{
-    const list =[...inputField]  
-    list.splice(id,1)
-    setInputfield(list)
-  }
-  console.log("ListInputFiled", inputField);
+  const onHandleRemove = (id) => {
+    const list = [...inputField];
+    list.splice(id, 1);
+    setInputfield(list);
+  };
+
+  console.log("ListValue>>",info )
 
   return (
     <Grid>
       <Paper elevation={0} style={paperStyle}>
         <Grid align="center" sx={{ mt: 3 }}>
-          <h2 style={headerStyle}>{ids ? "Update" : "Add New"} Contact</h2>
+          <h2 style={headerStyle}>{id ? "Update" : "Add New"} Contact</h2>
         </Grid>
 
         <form onSubmit={handleSubmit}>
@@ -216,54 +220,53 @@ export const Addcontact = () => {
             helperText={Boolean(errors.address) && errors.address}
           />
 
-          {/* <TextField
-            fullWidth
-            sx={{ mt: 3 }}
-            id="mobileNo"
-            name="mobileNo"
-            label="Mobile No"
-            placeholder="Enter your Mobile No"
-            value={values.mobileNo}
-            onChange={handleChange("mobileNo")}
-            error={touched.mobileNo && Boolean(errors.mobileNo)}
-            helperText={Boolean(errors.mobileNo) && errors.mobileNo}
-          /> */}
-         
           {inputField &&
             inputField?.map((item, Index) => {
               return (
                 <>
                   <Grid container>
-                    <Select
-                      style={{
-                        width: "49%",
-                        marginRight: "8px",
-                        marginTop: "25px",
-                        height: "fit-content",
-                      }}
-                      labelId="demo-simple-select-helper-label"
-                      label="Age"
-                      name="type"
-                      value={item.type}
-                      id={item.id}
-                      onChange={onHandleNumber(item.id)}
-                    >
-                      <MenuItem value="Home">Home</MenuItem>
-                      <MenuItem value="Fax">Fax</MenuItem>
-                      <MenuItem value="Mobile">Mobile</MenuItem>
-                    </Select>
-
-                    <TextField
-                      disabled={item.id ? false : true}
-                      fullWidth
-                      sx={{ mt: 3, width: "50%" }}
-                      name="number"
-                      label="Number"
-                      placeholder="Enter your Phone"
-                      value={item.number}
-                      onChange={onHandleNumber(item.id)}
-                      id={item.id}
-                    />
+                    <Grid xs={12} sm={6}>
+                      <FormControl sx={{ minWidth: 420 }}>
+                        <InputLabel
+                          sx={{ marginBottom: "26px", marginTop: "26px" }}
+                          id="demo-simple-select-autowidth-label"
+                        >
+                          Type
+                        </InputLabel>
+                        <Select
+                          sx={{
+                            width: "95%",
+                            marginRight: "8px",
+                            marginTop: "25px",
+                            height: "fit-content",
+                          }}
+                          labelId="demo-simple-select-autowidth-label"
+                          label="Type"
+                          name="type"
+                          value={item.type}
+                          id={item.id}
+                          onChange={onHandleNumber(item.id)}
+                          autoWidth
+                        >
+                          <MenuItem value="Home">Home</MenuItem>
+                          <MenuItem value="Fax">Fax</MenuItem>
+                          <MenuItem value="Mobile">Mobile</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid xs={12} sm={6}>
+                      <TextField
+                        disabled={item.id ? false : true}
+                        fullWidth
+                        sx={{ mt: 3, width: "100%" }}
+                        name="number"
+                        label="Number"
+                        placeholder="Enter your Phone"
+                        value={item.number}
+                        onChange={onHandleNumber(item.id)}
+                        id={item.id}
+                      />
+                    </Grid>
                     <div
                       style={{
                         paddingTop: 10,
@@ -273,7 +276,7 @@ export const Addcontact = () => {
                       }}
                     >
                       <div>
-                        {inputField.length - 1 === Index  && (
+                        {inputField.length - 1 === Index && (
                           <Button variant="contained" onClick={onHandleClick}>
                             Add More
                           </Button>
@@ -281,7 +284,7 @@ export const Addcontact = () => {
                       </div>
 
                       <div style={{ marginLeft: 10 }}>
-                        {inputField.length!== 1 && (
+                        {inputField.length !== 1 && (
                           <Button
                             variant="contained"
                             onClick={() => onHandleRemove(item.id)}
