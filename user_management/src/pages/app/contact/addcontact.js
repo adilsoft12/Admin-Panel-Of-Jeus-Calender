@@ -10,7 +10,6 @@ import Select from "@mui/material/Select";
 import { useHistory } from "react-router-dom";
 import { validationSchema } from "../contact/validate";
 import InputLabel from "@mui/material/InputLabel";
-import Box from "@mui/material/Box";
 
 export const Addcontact = () => {
   const location = useLocation();
@@ -20,8 +19,7 @@ export const Addcontact = () => {
     { type: "", number: "", status: "", id: crypto.randomUUID() },
   ]);
 
-
-  console.log("listValues", info)
+  console.log("listValues", id);
   const history = useHistory();
 
   const paperStyle = {
@@ -43,12 +41,19 @@ export const Addcontact = () => {
   }, []);
 
   const fetchDetails = async (data) => {
-    console.log("DataShow", data)
     const result = await axios.post(
       `http://jewcalendar-001-site1.btempurl.com/api/Contact/GetBy-ID?Id=${data}`
     );
-    console.log("resultData", result)
-    setInfo(result.data);
+    const ids = id;
+    const resultData = result.data;
+    const userDetails = resultData[0];
+    setInfo(resultData);
+
+    if (userDetails) {
+      const numbers = userDetails.number || [];
+      const listInputField = [...numbers];
+      setInputfield(listInputField);
+    }
   };
 
   const AddCnt = async (data) => {
@@ -81,6 +86,7 @@ export const Addcontact = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      const ids = id;
       const listInputfield = inputField.map((i) => ({
         id: 0,
         contactId: 0,
@@ -88,6 +94,15 @@ export const Addcontact = () => {
         number: i.number,
         status: "",
       }));
+
+      const upDateFieldLIst = inputField.map((s) => ({
+        id: s.id,
+        contactId: s.contactId,
+        type: s.type,
+        number: s.number,
+        status: "Update",
+      }));
+
       const queryObj = {
         id: Number(id || 0),
         productName: values.productName,
@@ -95,7 +110,7 @@ export const Addcontact = () => {
         website2: values.website2,
         website3: values.website3,
         address: values.address,
-        number: listInputfield,
+        number: ids ? upDateFieldLIst : listInputfield,
         email: values.email,
       };
       if (id) {
@@ -113,11 +128,9 @@ export const Addcontact = () => {
     ]);
   };
 
-  console.log("inputField>>>", inputField);
-
   const { handleChange, handleSubmit, setFieldValue, values, errors, touched } =
     formik;
-  console.log("testingggg",{ errors });
+
   useEffect(() => {
     if (info) {
       setFieldValue("productName", info[0]?.productName);
@@ -125,14 +138,11 @@ export const Addcontact = () => {
       setFieldValue("website2", info[0]?.website2);
       setFieldValue("website3", info[0]?.website3);
       setFieldValue("address", info[0]?.address);
-      // setFieldValue("mobileNo", info.mobileNo);
-      // setFieldValue("phone", info.phone);
       setFieldValue("email", info[0]?.email);
     }
   }, [info]);
 
   const onHandleNumber = (id) => (e) => {
-    console.log("IDLIst", id);
     const { value, name } = e.target;
     const inputFieldList = inputField.map((item) => {
       if (item.id === id) {
@@ -147,12 +157,9 @@ export const Addcontact = () => {
   };
 
   const onHandleRemove = (id) => {
-    const list = [...inputField];
-    list.splice(id, 1);
-    setInputfield(list);
+    const filterInputfield = inputField.filter((s) => s.id !== id);
+    setInputfield(filterInputfield);
   };
-
-  console.log("ListValue>>",info )
 
   return (
     <Grid>
@@ -288,6 +295,7 @@ export const Addcontact = () => {
                           <Button
                             variant="contained"
                             onClick={() => onHandleRemove(item.id)}
+                            // onClick={() => onHandleNumber(item.id)}
                           >
                             Remove
                           </Button>
