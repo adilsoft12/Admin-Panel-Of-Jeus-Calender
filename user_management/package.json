@@ -47,6 +47,7 @@
     "react-router-dom": "5.2.0",
     "react-script": "^2.0.5",
     "react-scripts": "^5.0.1",
+    "react-uuid": "^2.0.0",
     "recharts": "^2.0.9",
     "redux-persist": "^6.0.0",
     "styled-components": "^5.3.3",

@@ -10,13 +10,14 @@ import Select from "@mui/material/Select";
 import { useHistory } from "react-router-dom";
 import { validationSchema } from "../contact/validate";
 import InputLabel from "@mui/material/InputLabel";
+import uuid from "react-uuid";
 
 export const Addcontact = () => {
   const location = useLocation();
   const [id, setId] = useState(0);
   const [info, setInfo] = useState([]);
   const [inputField, setInputfield] = useState([
-    { type: "", number: "", status: "", id: crypto.randomUUID() },
+    { type: "", number: "", status: "", id: uuid() },
   ]);
 
   console.log("listValues", id);
@@ -66,10 +67,12 @@ export const Addcontact = () => {
     }
   };
   const updateContact = async (data) => {
+    console.log("DataLIst", data);
     const response = await axiosInstance.post(
       `${API_ENDPOINTS_Contact.update_file}`,
       data
     );
+    console.log("responseresponse", response);
     if (response) {
       history.push("/contact");
     }
@@ -96,8 +99,9 @@ export const Addcontact = () => {
       }));
 
       const upDateFieldLIst = inputField.map((s) => ({
-        id: s.id,
-        contactId: s.contactId,
+        // id:  s.id,
+        id: Number(id),
+        contactId: Number(id),
         type: s.type,
         number: s.number,
         status: "Update",
@@ -115,6 +119,7 @@ export const Addcontact = () => {
       };
       if (id) {
         updateContact(queryObj);
+        alert(2);
       } else {
         AddCnt(queryObj);
       }
@@ -124,7 +129,7 @@ export const Addcontact = () => {
   const onHandleClick = () => {
     setInputfield([
       ...inputField,
-      { type: "", number: "", status: "", id: crypto.randomUUID() },
+      { type: "", number: "", status: "", id: uuid() },
     ]);
   };
 
@@ -156,9 +161,19 @@ export const Addcontact = () => {
     setInputfield(inputFieldList);
   };
 
-  const onHandleRemove = (id) => {
-    const filterInputfield = inputField.filter((s) => s.id !== id);
-    setInputfield(filterInputfield);
+  const onHandleRemove = async (contactID) => {
+    if (id) {
+      const result = await axios.post(
+        `http://jewcalendar-001-site1.btempurl.com/api/Contact/Delete-Contact-By-Number-Id?id=${contactID}`
+      );
+      if (result.data.message === "NumberDeleted") {
+        const filterInputfield = inputField.filter((s) => s.id !== contactID);
+        setInputfield(filterInputfield);
+      }
+    } else {
+      const filterInputfield = inputField.filter((s) => s.id !== contactID);
+      setInputfield(filterInputfield);
+    }
   };
 
   return (
