@@ -19,10 +19,8 @@ export const Addcontact = () => {
   const [inputField, setInputfield] = useState([
     { type: "", number: "", status: "", id: uuid() },
   ]);
-
-  console.log("listValues", id);
+ 
   const history = useHistory();
-
   const paperStyle = {
     padding: "40px 30px 50px 25px",
     width: 900,
@@ -67,12 +65,12 @@ export const Addcontact = () => {
     }
   };
   const updateContact = async (data) => {
-    console.log("DataLIst", data);
+  
     const response = await axiosInstance.post(
       `${API_ENDPOINTS_Contact.update_file}`,
       data
     );
-    console.log("responseresponse", response);
+  
     if (response) {
       history.push("/contact");
     }
@@ -119,7 +117,6 @@ export const Addcontact = () => {
       };
       if (id) {
         updateContact(queryObj);
-        alert(2);
       } else {
         AddCnt(queryObj);
       }
