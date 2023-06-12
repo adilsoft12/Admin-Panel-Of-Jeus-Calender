@@ -38,10 +38,11 @@ import { AddBanner } from "../pages/app/banner/addbanner";
 import { BannerDetail } from "../pages/app/banner/bannerdetail";
 import { AddUpcomingEvent } from "../pages/app/upcomingEvent/addUpcomingEvent";
 import { UpcomingeventDetail } from "../pages/app/upcomingEvent/upcomingEventDetail";
+import { AboutList } from "../pages/app/about/aboutlist";
+import { AddAbout } from "../pages/app/about/addabout";
+import { AboutDetail } from "../pages/app/about/aboutdetail";
 
-// import {addorg} from '../pages/app/organisation/addorg';
 export const CommonRouter = () => {
-  // const location = useLocation();
   const userid = useUserData();
   console.log("userlogin", userid);
   const browserHistory = createBrowserHistory();
@@ -52,97 +53,62 @@ export const CommonRouter = () => {
         <PrivateRoutes exact path="/Setting">
           <Setting />
         </PrivateRoutes>
+        <PrivateRoutes exact path="/aboutus">
+          <AboutList />
+        </PrivateRoutes>
         <PrivateRoutes exact path="/CreateBusinessForm">
           <CreateBusinessForm />
         </PrivateRoutes>
-
         <PrivateRoutes exact path="/UserManagement">
           <UserManagement />
         </PrivateRoutes>
-
         <PrivateRoutes exact path="/dashboard">
           <DashBoard />
         </PrivateRoutes>
-
         <PrivateRoutes exact path="/Report">
           <Report />
         </PrivateRoutes>
-
         <PrivateRoutes exact path="/roles">
           <AssignRole />
         </PrivateRoutes>
-
         <PrivateRoutes exact path="/user">
           <UserManagement />
         </PrivateRoutes>
-
         <PrivateRoutes exact path="/assignpermission">
           <AssignPermission />
         </PrivateRoutes>
-
         <PrivateRoutes exact path="/screen">
           <Screen />
         </PrivateRoutes>
-
         <PrivateRoutes exact path="/permission">
           <Permission />
         </PrivateRoutes>
-
         <PrivateRoutes exact path="/Organization">
           <Organization />
         </PrivateRoutes>
-
-        {/* <PrivateRoutes exact path="/AddORG">
-          <AddORG />
-        </PrivateRoutes> */}
-
-
-        {/* <PrivateRoutes exact path="/addpdf">
-          <AddPdf />
-        </PrivateRoutes> */}
-
         <PrivateRoutes exact path="/calenderdetails">
           <PdfList />
         </PrivateRoutes>
-
         <PrivateRoutes exact path="/event">
           <EventList />
         </PrivateRoutes>
-
-        {/* <PrivateRoutes exact path="/addevent">
-          <AddEvent />
-        </PrivateRoutes> */}
-
-        {/* <PrivateRoutes exact path="/addcontact">
-          <Addcontact />
-        </PrivateRoutes> */}
-
         <PrivateRoutes exact path="/contact">
           <ContactList />
         </PrivateRoutes>
-
-        <PrivateRoutes exact path="/banner">
+        <PrivateRoutes exact path="/logout">
           <BannerList />
         </PrivateRoutes>
-
-        {/* <PrivateRoutes exact path="/AddBanner">
-          <AddBanner />
-        </PrivateRoutes> */}
-
         <PrivateRoutes exact path="/">
           <DashBoard />
         </PrivateRoutes>
         <PrivateRoutes exact path="/advertisement">
           <Advertisement />
         </PrivateRoutes>
-
         <PrivateRoutes exact path="/upcomingevent">
           <UpcomingEvent />
         </PrivateRoutes>
-
         <Route exact path="/Roles" component={AssignRole} />
         <Route exact path="/screen" component={Screen} />
-
         <Route exact path="/Userlogin" component={Userlogin} />
         <Route exact path="/ForgotPassword" component={ForgotPassword} />
         <Route exact path="/Login" component={Login} />
@@ -154,7 +120,6 @@ export const CommonRouter = () => {
           path="/CreateBusinessForm"
           component={CreateBusinessForm}
         />
-
         <Route exact path="/Organization" component={Organization} />
         <Route exact path="/AddORG" component={AddORG} />
         <Route path="/AddORG/:id" component={AddORG} />
@@ -179,6 +144,11 @@ export const CommonRouter = () => {
         <Route exact path="/contactDetail/:id" component={ContactDetail} />
         <Route exact path="/addcontact" component={Addcontact} />
         <Route exact path="/contact" component={ContactList} />
+
+        <Route exact path="/about" component={AboutList} />
+        <Route exact path="/AddAbout" component={AddAbout} />
+        <Route exact path="/AddAbout/:id" component={AddAbout} />
+        <Route exact path="/AboutDetail/:id" component={AboutDetail} />
 
         <Route exact path="/banner" component={BannerList} />
         <Route exact path="/AddBanner" component={AddBanner} />

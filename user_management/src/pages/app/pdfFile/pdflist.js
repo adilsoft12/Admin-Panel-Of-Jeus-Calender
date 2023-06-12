@@ -114,7 +114,7 @@ export const PdfList = () => {
     try {
       axiosInstance
         .delete(
-          `http://jewcalendar-001-site1.btempurl.com/api/File/DeleteFile?Id=${id}`
+          `https://localhost:44379/api/File/DeleteFile?Id=${id}`
         )
         .then((res) => {
           if (res.data.message === "File Deleted") {
@@ -186,6 +186,9 @@ export const PdfList = () => {
     page: PropTypes.number.isRequired,
     rowsPerPage: PropTypes.number.isRequired,
   };
+
+
+  console.log("infolistData",getDetails )
 
   return (
     <AppConainer>

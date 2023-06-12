@@ -33,7 +33,7 @@ export function DetailOrg() {
   async function getDetail(data) {
     try {
       const result = await axios.get(
-        `http://jewcalendar-001-site1.btempurl.com/api/Organization/Get-Organization-By-Id?Id=${data}`
+        `https://localhost:44379/api/Organization/Get-Organization-By-Id?Id=${data}`
       );
       setInfo(result.data);
     console.log("result-------------->",result.data)

@@ -1,5 +1,6 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useState, useEffect } from "react";
-import { Grid, Paper, TextField, Button } from "@mui/material";
+import { Grid,  TextField, Button } from "@mui/material";
 import { useFormik } from "formik";
 import { axiosInstance } from "../../../services/axiosInstance";
 import { API_ENDPOINTS_ADV } from "../../../services/api_url";
@@ -8,6 +9,7 @@ import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import { validationSchema } from "./validate";
+import FormHelperText from "@mui/material/FormHelperText";
 import "./index.css";
 
 export const AddADV = () => {
@@ -17,17 +19,6 @@ export const AddADV = () => {
   const [selectedImage, setSelectedImage] = useState("");
   const [isLoading, setLoading] = useState(false);
   const history = useHistory();
-
-  // // const testYear =  info?.year.toString();
-  // console.log("testYear",testYear)
-
-  const paperStyle = {
-    width: 900,
-    marginLeft: "270px",
-    paddingTop: "5px",
-  };
-
-  // const headerStyle = { margin: 0, }
 
   useEffect(() => {
     const tempArray = location.pathname?.split("/");
@@ -42,16 +33,13 @@ export const AddADV = () => {
 
   const fetchDetails = async (data) => {
     const result = await axios.get(
-      `http://jewcalendar-001-site1.btempurl.com/api/Advertisement/Get-Advertisement-By-Id?Id=${data}`
+      `http://usermanagement01-001-site1.atempurl.com/api/Advertisement/Get-Advertisement-By-Id?Id=${data}`
     );
     setInfo(result.data);
-    console.log("userResponse for edit", result.data);
+    console.log("userResponse for edit",JSON.stringify(result.data,null,2));
   };
-
   async function makePostRequest(queryObj) {
     setLoading(true);
-    console.log("ListofData", queryObj);
-
     try {
       const data = {
         id: Number(id || 0),
@@ -61,6 +49,7 @@ export const AddADV = () => {
         businessUrl: queryObj?.businessUrl,
         imagePath: queryObj?.imagePath,
         year: Number(queryObj?.year),
+        type: queryObj?.type,
       };
 
       if (id) {
@@ -68,7 +57,6 @@ export const AddADV = () => {
           `${API_ENDPOINTS_ADV.edit_adv}`,
           data
         );
-
         if (response.data.message === "Advertisement Updated") {
           setLoading(false);
           history.push("/advertisement");
@@ -96,10 +84,10 @@ export const AddADV = () => {
       businessUrl: "",
       imagePath: "",
       year: "",
+      type:"",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log("first", formik.errors);
       const queryObj = {
         businessName: values.businessName,
         imageFile: values.imageFile,
@@ -107,15 +95,13 @@ export const AddADV = () => {
         businessUrl: values.businessUrl,
         imagePath: "https://base64.guru/converter/encode/image",
         year: values.year,
+        type: values.type,
       };
       makePostRequest(queryObj);
-      console.log("value of the year----->", values.year);
     },
   });
-  // console.log("value of the year----->",values.year)
-  const { handleChange, handleSubmit, setFieldValue, values, errors, touched } =
-    formik;
-
+  
+  const { handleChange, handleSubmit, setFieldValue, values, errors, touched , handleBlur} = formik;
   useEffect(() => {
     if (info) {
       setFieldValue("businessName", info.businessName);
@@ -124,11 +110,9 @@ export const AddADV = () => {
       setFieldValue("businessUrl", info.businessUrl);
       setFieldValue("imagePath", info.imagePath);
       setFieldValue("year", info.year);
-      // console.log("info----->",info.year)
+      setFieldValue("type", info.type);
     }
   }, [info]);
-
-  console.log("values>>>", values);
 
   const getBase64 = (file, cb) => {
     let reader = new FileReader();
@@ -142,23 +126,25 @@ export const AddADV = () => {
   };
 
   const handleImage = (event) => {
-    console.log("eventList", event);
     getBase64(event.currentTarget.files[0], (result) => {
       setFieldValue("imageFile", result.split(",")[1]);
       setSelectedImage(result);
     });
   };
 
-  // console.log("value of the year----->",values.year)
+  console.log("infoData", info);
+  console.log("LIstData>>>", { errors, touched });
+  const BaseImageURL = "https://localhost:44379/";
+  const showImagepatrh = Boolean(info.imagePath);
   return (
     <Grid>
-      <div className="add-theme" style={{  width: "900px",
-    marginLeft: "270px",
-    paddingTop: "5px",}}>
+      <div
+        className="add-theme"
+        style={{ width: "900px", marginLeft: "270px", paddingTop: "5px" }}
+      >
         <Grid align="center" sx={{ mt: 3 }}>
           <h2>{id ? "Update" : "Add New"} Advertisement</h2>
         </Grid>
-
         <form onSubmit={handleSubmit}>
           <TextField
             fullWidth
@@ -168,9 +154,10 @@ export const AddADV = () => {
             label=" business Name"
             placeholder="Enter your  business Name"
             value={values.businessName}
+            onBlur={handleBlur}
             onChange={handleChange("businessName")}
             error={touched.businessName && Boolean(errors.businessName)}
-            helperText={touched.businessName && errors.businessName}
+            helperText={ Boolean(errors.businessName) && errors.businessName }
           />
           <TextField
             fullWidth
@@ -178,11 +165,12 @@ export const AddADV = () => {
             id="businessUrl"
             name=" businessUrl"
             label=" businessUrl"
+            onBlur={handleBlur}
             placeholder="Enter your  businessUrl"
             value={values.businessUrl}
             onChange={handleChange("businessUrl")}
             error={touched.businessUrl && Boolean(errors.businessUrl)}
-            helperText={touched.businessUrl && errors.businessUrl}
+            helperText={Boolean(errors.businessUrl) &&  errors.businessUrl}
           />
           <div style={{ margin: "35px 0" }}>
             <input
@@ -198,11 +186,22 @@ export const AddADV = () => {
                 <i class="fa fa-upload mr-2"></i>
               </label>
             </div>
-            {selectedImage && (
+            {selectedImage ? (
               <div style={{}}>
                 <img src={selectedImage} style={{ height: 250, width: 250 }} />
               </div>
+            ) : (
+              showImagepatrh && (
+                <div style={{}}>
+                  <img
+                    src={`${BaseImageURL}/${info.imagePath}`}
+                    style={{ height: 250, width: 250 }}
+                  />
+                </div>
+              )
             )}
+           
+            {errors.imageFile && <p style={{ fontSize: 12 }}>Required</p>}
           </div>
 
           <TextField
@@ -213,9 +212,13 @@ export const AddADV = () => {
             label="image Description"
             placeholder="Enter your image Description"
             value={values.imageDescription}
+            onBlur={handleBlur}
             onChange={handleChange("imageDescription")}
+            error={touched.imageDescription && Boolean(errors.imageDescription)}
+            helperText={
+              Boolean(errors.imageDescription) && errors.imageDescription
+            }
           />
-
           <TextField
             fullWidth
             sx={{ mt: 3 }}
@@ -223,8 +226,24 @@ export const AddADV = () => {
             name="year"
             label="year"
             placeholder="Enter year"
+            onBlur={handleBlur}
             value={values.year}
             onChange={handleChange("year")}
+            error={touched.year && Boolean(errors.year)}
+            helperText={Boolean(errors.year) && errors.year}
+          />
+          <TextField
+            fullWidth
+            sx={{ mt: 3 }}
+            id="type"
+            name="type"
+            label="type"
+            placeholder="Enter type"
+            onBlur={handleBlur}
+            value={values.type}
+            onChange={handleChange("type")}
+            error={touched.type && Boolean(errors.type)}
+            helperText={Boolean(errors.type) && errors.type}
           />
 
           <Button

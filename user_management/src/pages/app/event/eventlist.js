@@ -115,7 +115,7 @@ export const EventList = () => {
     try {
       axiosInstance
         .delete(
-          `http://jewcalendar-001-site1.btempurl.com/api/ReligiousEvent/Delete?id=${id}`
+          `https://localhost:44379/api/ReligiousEvent/Delete?id=${id}`
         )
         .then((res) => {
           if (res.data.message ==="Deleted") {

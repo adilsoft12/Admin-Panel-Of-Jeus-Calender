@@ -114,7 +114,7 @@ export const BannerList = () => {
     try {
       axiosInstance
         .delete(
-          `http://jewcalendar-001-site1.btempurl.com/api/Banner/Delete?id=${id}`
+          `http://localuser02-001-site4.etempurl.com/api/Banner/Delete?id=${id}`
         )
         .then((res) => {
           if (res.data.message ==="Deleted") {

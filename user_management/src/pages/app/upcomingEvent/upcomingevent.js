@@ -82,7 +82,6 @@ export const UpcomingEvent = () => {
     const result = await axiosInstance.post(
       `${API_ENDPOINTS_UpcomingEvent.get_all_event}`
     );
-    console.log("result------>", result);
     if (result.data) {
       setIsloading(false);
       setGetDetails(result.data);
@@ -117,7 +116,7 @@ export const UpcomingEvent = () => {
     try {
       axiosInstance
         .delete(
-          `http://jewcalendar-001-site1.btempurl.com/api/UpcomingEvent/Delete?id=${id}`
+          `https://localhost:44379/api/UpcomingEvent/Delete?id=${id}`
         )
         .then((res) => {
           if (res.data.message === "Deleted") {
@@ -225,9 +224,9 @@ export const UpcomingEvent = () => {
           ADD Upcoming EVENT
         </Button>
       </div>
-      <div style={{ marginLeft: 20 }}>
+      <div style={{ marginLeft: "20px" }}>
         <TableContainer component={Paper}>
-          <Table sx={{ width: "1250px" }} aria-label="customized table">
+          <Table sx={{ width: 'auto'}} aria-label="customized table">
             <TableHead>
               <TableRow>
                 <StyledTableCell>Id</StyledTableCell>
@@ -262,11 +261,9 @@ export const UpcomingEvent = () => {
                 return (
                   <StyledTableRow key={index}>
                     <StyledTableCell component="th" scope="row">
-                      {" "}
-                      {++index}{" "}
+                      {++index}
                     </StyledTableCell>
                     <StyledTableCell component="th" scope="row">
-                      {" "}
                       {item.startTime}
                     </StyledTableCell>
                     <StyledTableCell
@@ -289,35 +286,35 @@ export const UpcomingEvent = () => {
                       scope="row"
                     >
                       {item.eventNamePersian}
-                    </StyledTableCell>{" "}
+                    </StyledTableCell>
                     <StyledTableCell
                       sx={{ textAlign: "start" }}
                       component="th"
                       scope="row"
                     >
                       {item.eventNameEnglish}
-                    </StyledTableCell>{" "}
+                    </StyledTableCell>
                     <StyledTableCell
                       sx={{ textAlign: "start" }}
                       component="th"
                       scope="row"
                     >
                       {item.address}
-                    </StyledTableCell>{" "}
+                    </StyledTableCell>
                     <StyledTableCell
                       sx={{ textAlign: "start" }}
                       component="th"
                       scope="row"
                     >
                       {item.phoneNumber}
-                    </StyledTableCell>{" "}
+                    </StyledTableCell>
                     <StyledTableCell
                       sx={{ textAlign: "start" }}
                       component="th"
                       scope="row"
                     >
                       {item.email}
-                    </StyledTableCell>{" "}
+                    </StyledTableCell>
                     <StyledTableCell
                       sx={{ textAlign: "start" }}
                       component="th"

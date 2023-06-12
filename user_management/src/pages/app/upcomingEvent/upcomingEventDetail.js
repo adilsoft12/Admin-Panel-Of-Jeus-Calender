@@ -10,18 +10,9 @@ import { AppConainer } from "../../../components";
 
 export function UpcomingeventDetail() {
   const history = useHistory();
-  const [id, setId] = useState([]);
   const [info, setInfo] = useState([]);
   const location = useLocation();
 
-  const headerStyle = { margin: 0 };
-  const paperStyle = {
-    padding: "40px 30px 50px 20px",
-    width: 700,
-    margin: "20px auto",
-    align: "center",
-    height: "500px",
-  };
 
   useEffect(() => {
     const temp = location.pathname.split("/");
@@ -33,7 +24,7 @@ export function UpcomingeventDetail() {
   async function getDetail(data) {
     try {
       const result = await axios.get(
-        `http://jewcalendar-001-site1.btempurl.com/api/UpcomingEvent/GetBy-Id?Id=${data}`
+        `https://localhost:44379/api/UpcomingEvent/GetBy-Id?Id=${data}`
       );
       setInfo(result.data);
     } catch (error) {}
@@ -41,7 +32,7 @@ export function UpcomingeventDetail() {
 
   return (
     <AppConainer>
-      <Paper elevation={3} sx={{ marginLeft: "200px" }}>
+      <Paper elevation={3} sx={{ marginLeft: "100px" }}>
         <Grid
           style={{
             display: "flex",
@@ -56,6 +47,7 @@ export function UpcomingeventDetail() {
               paddingBottom: "20px",
               paddingLeft: "19px",
               paddingRight: "20px",
+              height:'auto'
             }}
           >
             <h1 className="titr-font" style={{ textAlign: "center" }}>
@@ -302,6 +294,7 @@ export function UpcomingeventDetail() {
                   </Typography>
                 </Grid>
               </Grid>
+        
               <Grid
                 container
                 rowSpacing={2}
@@ -326,6 +319,33 @@ export function UpcomingeventDetail() {
                   </Typography>
                 </Grid>
               </Grid>
+
+              <Grid
+                container
+                rowSpacing={2}
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              >
+                <Grid item xs={4}>
+                  <Typography className="BBCNassim-font" sx={{ fontSize: 20 }}>
+                    <a style={{ fontWeight: "bold", marginRight: "20px" }}>
+                    EventDescriptionPrivate:
+                    </a>
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography className="BBCNassim-font" sx={{ fontSize: 20 }}>
+                  :
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={4}>
+                  <Typography className="BBCNassim-font" sx={{ fontSize: 20 }}>
+                    {info.eventDescriptionPrivate}
+                  </Typography>
+                </Grid>
+              </Grid>
+
+          
               <Grid
                 container
                 rowSpacing={2}

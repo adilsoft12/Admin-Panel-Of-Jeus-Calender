@@ -33,80 +33,219 @@ export const ContactDetail = () => {
   async function getDetail(data) {
     try {
       const result = await axios.post(
-        `http://jewcalendar-001-site1.btempurl.com/api/Contact/GetBy-ID?Id=${data}`
+        `https://localhost:44379/api/Contact/GetBy-ID?Id=${data}`
       );
       setInfo(result.data);
     } catch (error) {}
   }
 
+  console.log("LIstData>>", info);
+
   return (
     <AppConainer>
-      <Paper  elevation={3} sx={{marginLeft:"250px"}}>
-      <Grid
-      style={{ display: "flex", justifyContent: "center", marginTop: "30px" }}
-    >
-      <Grid
-        style={{
-          // backgroundColor: "#C3C6E2",
-          backgroundSize: "cover",
-          textAlign: "start",
-          paddingTop: "50px",
-          paddingBottom: "50px",
-          paddingLeft: "19px",
-          paddingRight: "10px",
-        }}
-      >
-        <h1 className="titr-font" style={{ headerStyle, textAlign:"center" ,fontWeight:"bold"}}>
-          {" "}
-          Contact Detail{" "}
-        </h1>
-       
-        <Typography className="BBCNassim-font" sx={{ fontSize: 20,  }}>
-      <a style={{fontWeight:"bold",marginRight:"10px"}}> Product Name</a>: {info.productName}
-        </Typography>
-        <Typography className="BBCNassim-font" sx={{ fontSize: 20,  }}>
-        <a style={{fontWeight:"bold",marginRight:"56px"}}>Website1</a>: {info.website1}
-        </Typography>
-        <Typography className="BBCNassim-font" sx={{ fontSize: 20,  }}>
-        <a style={{fontWeight:"bold",marginRight:"56px"}}>Website2</a>: {info.website2}
-        </Typography>
-        <Typography className="BBCNassim-font" sx={{ fontSize: 20,  }}>
-        <a style={{fontWeight:"bold",marginRight:"56px"}}>Website3</a>:{info.website3}
-        </Typography>
-        <Typography className="BBCNassim-font" sx={{ fontSize: 20,  }}>
-        <a style={{fontWeight:"bold",marginRight:"65px"}}>Address</a>: {info.address}
-        </Typography>
-        <Typography className="BBCNassim-font" sx={{ fontSize: 20,  }}>
-        <a style={{fontWeight:"bold",marginRight:"45px"}}>Mobile No</a>: {info.mobileNo}
-        </Typography>
-        <Typography className="BBCNassim-font" sx={{ fontSize: 20,  }}>
-        <a style={{fontWeight:"bold",marginRight:"82px"}}>Phone</a>: {info.phone}
-        </Typography>
-        <Typography className="BBCNassim-font" sx={{ fontSize: 20,  }}>
-        <a style={{fontWeight:"bold",marginRight:"84px"}}>Email</a>: {info.email}
-        </Typography>
-        <Button
-          sx={{
-            ml: 1,
-            mt: 3,
-            backgroundColor: "#3945b9",
-            color: "white",
-            marginLeft: "-3px",
-            marginBottom: "20px",
-
+      <Paper elevation={3} sx={{ marginLeft: "250px" }}>
+        <Grid
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "30px",
           }}
-          type="submit"
-          variant="contained"
-          align="center"
-          onClick={() => history.push("/contact")}
         >
-          Go Back
-        </Button>
-      </Grid>
-    </Grid>
+          <Grid
+            style={{
+              // backgroundColor: "#C3C6E2",
+              backgroundSize: "cover",
+              textAlign: "start",
+              paddingTop: "50px",
+              paddingBottom: "50px",
+              paddingLeft: "19px",
+              paddingRight: "10px",
+            }}
+          >
+            <h1
+              className="titr-font"
+              style={{ headerStyle, textAlign: "center", fontWeight: "bold" }}
+            >
+              {" "}
+              Contact Detail{" "}
+            </h1>
+
+            {info?.map((listData) => {
+              return (
+                <>
+                  <Grid container>
+                    <Grid xs={2} sm={6} md={6}>
+                      <Typography
+                        variant="h1"
+                        sx={{ fontSize: 20, width: 200 }}
+                      >
+                        Product Name
+                      </Typography>
+                    </Grid>
+                    <Grid xs={2} sm={6} md={6}>
+                      <Typography
+                        sx={{ fontSize: 14, width: 250 }}
+                        variant="h1"
+                      >
+                        {" "}
+                        : {listData.productName}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  {listData.website1 && (
+                    <Grid container>
+                      <Grid xs={2} sm={6} md={6}>
+                        <Typography
+                          variant="h1"
+                          sx={{ fontSize: 20, width: 200 }}
+                        >
+                          Website One
+                        </Typography>
+                      </Grid>
+                      <Grid xs={2} sm={6} md={6}>
+                        <Typography
+                          sx={{ fontSize: 14, width: 200 }}
+                          variant="h1"
+                        >
+                          {" "}
+                          : {listData.website1}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  )}
+
+                  {listData.website2 && (
+                    <Grid container>
+                      <Grid xs={2} sm={6} md={6}>
+                        <Typography
+                          variant="h1"
+                          sx={{ fontSize: 20, width: 200 }}
+                        >
+                          Website Second
+                        </Typography>
+                      </Grid>
+                      <Grid xs={2} sm={6} md={6}>
+                        <Typography
+                          sx={{ fontSize: 14, width: 200 }}
+                          variant="h1"
+                        >
+                          {" "}
+                          : {listData.website2}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  )}
+
+                  {listData.website3 && (
+                    <Grid container>
+                      <Grid xs={2} sm={6} md={6}>
+                        <Typography
+                          variant="h1"
+                          sx={{ fontSize: 20, width: 200 }}
+                        >
+                          Website Three
+                        </Typography>
+                      </Grid>
+                      <Grid xs={2} sm={6} md={6}>
+                        <Typography
+                          sx={{ fontSize: 14, width: 200 }}
+                          variant="h1"
+                        >
+                          {" "}
+                          : {listData.website3}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  )}
+
+                  <Grid container>
+                    <Grid xs={2} sm={6} md={6}>
+                      <Typography
+                        variant="h1"
+                        sx={{ fontSize: 20, width: 200 }}
+                      >
+                        Address
+                      </Typography>
+                    </Grid>
+                    <Grid xs={2} sm={6} md={6}>
+                      <Typography
+                        sx={{ fontSize: 14, width: 200 }}
+                        variant="h1"
+                      >
+                        {" "}
+                        : {listData.address}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+
+                  {listData.number && listData.number?.map((itm) => {
+                    return (
+                      <>
+                        <Grid container>
+                          <Grid xs={2} sm={6} md={6}>
+                            <Typography
+                              variant="h1"
+                              sx={{ fontSize: 20, width: 200 }}
+                            >
+                              {itm.type}
+                            </Typography>
+                          </Grid>
+                          <Grid xs={2} sm={6} md={6}>
+                            <Typography
+                              sx={{ fontSize: 14, width: 200 }}
+                              variant="h1"
+                            >
+                              {" "}
+                              : {itm.number}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </>
+                    );
+                  })}
+
+                  <Grid container>
+                    <Grid xs={2} sm={6} md={6}>
+                      <Typography
+                        variant="h1"
+                        sx={{ fontSize: 20, width: 200 }}
+                      >
+                        Email
+                      </Typography>
+                    </Grid>
+                    <Grid xs={2} sm={6} md={6}>
+                      <Typography
+                        sx={{ fontSize: 14, width: 250 }}
+                        variant="h1"
+                      >
+                        {" "}
+                        : {listData.email}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </>
+              );
+            })}
+
+            <Button
+              sx={{
+                ml: 1,
+                mt: 3,
+                backgroundColor: "#3945b9",
+                color: "white",
+                marginLeft: "-3px",
+                marginBottom: "20px",
+              }}
+              type="submit"
+              variant="contained"
+              align="center"
+              onClick={() => history.push("/contact")}
+            >
+              Go Back
+            </Button>
+          </Grid>
+        </Grid>
       </Paper>
-    
     </AppConainer>
-    
   );
-}
+};

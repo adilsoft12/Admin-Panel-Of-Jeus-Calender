@@ -144,7 +144,7 @@ export const Organization = () => {
     try {
       axiosInstance
         .delete(
-          `http://jewcalendar-001-site1.btempurl.com/api/Organization/Delete-Organization?Id=${id}`
+          `https://localhost:44379/api/Organization/Delete-Organization?Id=${id}`
         )
         .then((res) => {
           if (res.data.message === "Organization Deleted") {

@@ -38,7 +38,7 @@ export function DetailAdv() {
   async function getDetail(data) {
     try {
       const result = await axios.get(
-        `http://jewcalendar-001-site1.btempurl.com/api/Advertisement/Get-Advertisement-By-Id?Id=${data}`
+        `https://localhost:44379/api/Advertisement/Get-Advertisement-By-Id?Id=${data}`
       );
       setInfo(result.data);
     } catch (error) {}
@@ -97,6 +97,10 @@ export function DetailAdv() {
           <Typography className="BBCNassim-font" sx={{ fontSize: 20,}}>
             {" "}
             <a style={{fontWeight:"bold",marginRight:"125px"}}>Year</a>: {info.year}
+          </Typography>
+          <Typography className="BBCNassim-font" sx={{ fontSize: 20,}}>
+            {" "}
+            <a style={{fontWeight:"bold",marginRight:"125px"}}>Type</a>: {info.type}
           </Typography>
 
           <Button
