@@ -11,7 +11,7 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import {  API_ENDPOINTS_Contact} from "../../../services/api_url";
+import { API_ENDPOINTS_Contact } from "../../../services/api_url";
 import { axiosInstance } from "../../../services/axiosInstance";
 import { useHistory } from "react-router-dom";
 import TableFooter from "@material-ui/core/TableFooter";
@@ -106,7 +106,9 @@ export const ContactList = () => {
 
   const getAllContact = async () => {
     setIsloading(true);
-    const result = await axiosInstance.post(`${API_ENDPOINTS_Contact.get_all_files}`);
+    const result = await axiosInstance.post(
+      `${API_ENDPOINTS_Contact.get_all_files}`
+    );
     if (result.data) {
       setIsloading(false);
       setGetDetails(result.data);
@@ -141,11 +143,11 @@ export const ContactList = () => {
     try {
       axiosInstance
         .post(
-          `http://jewcalendar-001-site1.btempurl.com/api/Contact/Delete?id=${id}`
+          `https://localhost:44379/api/Contact/Delete?id=${id}`
         )
         .then((res) => {
           if (res.data.message === "Deleted") {
-            getAllContact ();
+            getAllContact();
             setIsloading(false);
             handleClose();
           }
@@ -229,6 +231,8 @@ export const ContactList = () => {
     rowsPerPage: PropTypes.number.isRequired,
   };
 
+  console.log("listResult", getDetails);
+
   return (
     <AppConainer>
       <div style={{ margin: 5, marginTop: 30, marginLeft: "0px" }}>
@@ -252,21 +256,21 @@ export const ContactList = () => {
           <Table sx={{ width: "1100px" }} aria-label="customized table">
             <TableHead>
               <TableRow>
-              <StyledTableCell>Id</StyledTableCell>
+                <StyledTableCell>Id</StyledTableCell>
                 <StyledTableCell>ProductName</StyledTableCell>
                 <StyledTableCell>Website1</StyledTableCell>
                 <StyledTableCell>Website2</StyledTableCell>
                 <StyledTableCell>Website3</StyledTableCell>
                 <StyledTableCell>Address </StyledTableCell>
-                <StyledTableCell>MobileNo</StyledTableCell>
-                <StyledTableCell>Phone</StyledTableCell>
+                {/* <StyledTableCell>MobileNo</StyledTableCell> */}
+                <StyledTableCell>Contact</StyledTableCell>
                 <StyledTableCell>Email</StyledTableCell>
                 <StyledTableCell align="center" colSpan="3">
                   Actions
                 </StyledTableCell>
               </TableRow>
             </TableHead>
-  
+
             <TableBody>
               {filteredResults.length > 0
                 ? (rowsPerPage > 0
@@ -292,15 +296,27 @@ export const ContactList = () => {
                         <StyledTableCell component="th" scope="row">
                           {item.website2}
                         </StyledTableCell>
-                        <StyledTableCell component="th" scope="row" >
+                        <StyledTableCell component="th" scope="row">
                           {item.website3}
                         </StyledTableCell>
-                        <StyledTableCell component="th" scope="row" >
+                        <StyledTableCell component="th" scope="row">
                           {item.address}
                         </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
+
+                        {item?.number.map((itmList) => {
+                          return (
+                            <>
+                              <StyledTableCell>
+                                <p>{itmList.type}</p>
+                                <p>{itmList.number}</p>
+                              </StyledTableCell>
+                            </>
+                          );
+                        })}
+
+                        {/* <StyledTableCell component="th" scope="row">
                           {item.mobileNo}
-                        </StyledTableCell>
+                        </StyledTableCell> */}
                         <StyledTableCell component="th" scope="row">
                           {item.phone}
                         </StyledTableCell>
@@ -385,11 +401,29 @@ export const ContactList = () => {
                         <StyledTableCell component="th" scope="row">
                           {item.address}
                         </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {item.mobileNo}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {item.phone}
+                        <StyledTableCell>
+                          {item?.number.map((itmList) => {
+                            return (
+                              <>
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    justifyContent: "space-evenly",
+                                  }}
+                                >
+                                  <div>
+                                    <p style={{ margin: "0px 0px" }}>
+                                      {itmList.type}:
+                                    </p>
+                                  </div>
+                                  <div>
+                                    <p style={{ margin: "0px 0px" }}>{itmList.number}</p>
+                                  </div>
+                                </div>
+                              </>
+                            );
+                          })}
                         </StyledTableCell>
                         <StyledTableCell component="th" scope="row">
                           {item.email}

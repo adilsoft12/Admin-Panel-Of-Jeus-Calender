@@ -36,7 +36,7 @@ export function BannerDetail() {
   async function getDetail(data) {
     try {
       const result = await axios.get(
-        `http://jewcalendar-001-site1.btempurl.com/api/Banner/GetBy-Id?Id=${data}`
+        `http://localuser02-001-site4.etempurl.com/api/Banner/GetBy-Id?Id=${data}`
       );
 
 

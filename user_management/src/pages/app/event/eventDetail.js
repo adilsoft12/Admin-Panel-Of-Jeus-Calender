@@ -33,7 +33,7 @@ export function EventDetail() {
   async function getDetail(data) {
     try {
       const result = await axios.get(
-        `http://jewcalendar-001-site1.btempurl.com/api/ReligiousEvent/GetBy-Id?Id=${data}`
+        `https://localhost:44379/api/ReligiousEvent/GetBy-Id?Id=${data}`
       );
       setInfo(result.data);
     } catch (error) {}

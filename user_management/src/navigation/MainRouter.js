@@ -33,7 +33,6 @@ export const MainRouter = withRouter(({ location }) => {
             <Switch>
 
                 <Route exact path='/dashboard' component={DashBoard} />
-                {/* <Route exact path='/UserManagement' component={UserManagement} /> */}
                 <Route exact path='/Screen' component={Screen} />
                 <Route exact path='/Roles' component={AssignRole} />
                 <Route exact path='/reports' component={Report} />

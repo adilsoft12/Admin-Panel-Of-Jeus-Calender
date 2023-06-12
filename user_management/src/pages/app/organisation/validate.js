@@ -14,6 +14,7 @@ export const validationSchema = yup.object().shape({
       .required("Email is required"),
     url: yup.string().min(2, "must be more then 2 characters").required("url cannot be blank"),
     organizationAddress: yup.string().required("This field is required"),
+    // countryId: yup.number().required("This field is required"),
     contactPerson:yup.string().required("This field is required"),
     mobileNo: yup.string().required("This field is required"),
   });

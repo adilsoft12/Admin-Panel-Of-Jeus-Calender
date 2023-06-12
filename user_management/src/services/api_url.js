@@ -1,5 +1,11 @@
-export const API_BASE_URL = "http://jewcalendar-001-site1.btempurl.com/api";
-export const IMG_BASE_URL = "http://jewcalendar-001-site1.btempurl.com/";
+// export const API_BASE_URL = "http://localuser02-001-site4.etempurl.com/api";
+// export const IMG_BASE_URL = "http://localuser02-001-site4.etempurl.com/";
+
+export const API_BASE_URL = "http://usermanagement01-001-site1.atempurl.com/api/";
+console.log("API_BASE_URL",API_BASE_URL)
+export const IMG_BASE_URL = "http://usermanagement01-001-site1.atempurl.com/";
+console.log("IMG_BASE_URL",IMG_BASE_URL)
+// http://usermanagement01-001-site1.atempurl.com/swagger/index.html
 
 export const API_ENDPOINTS_ADV = {
   add_adv: "/Advertisement/Add-Advertisement",
@@ -53,4 +59,12 @@ export const API_ENDPOINTS_UpcomingEvent = {
   get_id_event: "/UpcomingEvent/GetBy-Id",
   get_all_event: "/UpcomingEvent/GetAll",
   delete_event: "/UpcomingEvent/Delete ",
+};
+
+export const API_ENDPOINTS_About = {
+  upload_about: "/AboutUs/Add",
+  update_about: "/AboutUs/Update-Aboutus",
+  get_id_about: "/AboutUs/getbyid",
+  get_all_about: "/AboutUs/GetAll",
+  delete_about: "/AboutUs/Delete ",
 };

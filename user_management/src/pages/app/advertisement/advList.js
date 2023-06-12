@@ -149,7 +149,7 @@ export const Advertisement = () => {
     try {
       axiosInstance
         .delete(
-          `http://jewcalendar-001-site1.btempurl.com/api/Advertisement/Delete-Advertisement?Id=${id}`
+          `https://localhost:44379/api/Advertisement/Delete-Advertisement?Id=${id}`
         )
         .then((res) => {
           if (res.data.message === "Ad Deleted") {
@@ -285,6 +285,7 @@ export const Advertisement = () => {
                 <StyledTableCell>businessUrl</StyledTableCell>
                 <StyledTableCell>imagePath</StyledTableCell>
                 <StyledTableCell>year</StyledTableCell>
+                <StyledTableCell>type</StyledTableCell>
                 <StyledTableCell align="center" colSpan="3">
                   Actions
                 </StyledTableCell>
@@ -321,6 +322,9 @@ export const Advertisement = () => {
                         </StyledTableCell>
                         <StyledTableCell component="th" scope="row">
                           {item.year}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {item.type}
                         </StyledTableCell>
                         <div
                           style={{
@@ -414,6 +418,9 @@ export const Advertisement = () => {
                         </StyledTableCell>
                         <StyledTableCell component="th" scope="row">
                           {item.year}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {item.type}
                         </StyledTableCell>
                         <div
                           style={{

@@ -48,7 +48,7 @@ console.log("tempArray------>",tempArray);
   }, []);
   const fetchDetails = async (data) => {
     const result = await axios.get(
-      `http://jewcalendar-001-site1.btempurl.com/api/Organization/Get-Organization-By-Id?Id=${data}`
+      `https://localhost:44379/api/Organization/Get-Organization-By-Id?Id=${data}`
     );
     setInfo(result.data);
     console.log("result.data", result.data);
@@ -59,7 +59,7 @@ console.log("tempArray------>",tempArray);
 
   const AddOrganisation = async (data) => {
     const result = await axios.post(
-      "http://jewcalendar-001-site1.btempurl.com/api/Organization/Add-Organization",
+      "https://localhost:44379/api/Organization/Add-Organization",
       data
     );
     console.log("lisTdataSheowww", result)
@@ -69,7 +69,7 @@ console.log("tempArray------>",tempArray);
   };
   const updateOrganisation = async (data) => {
     console.log("data------->", data);
-    const response = await axios.put(`http://jewcalendar-001-site1.btempurl.com/api/Organization/Update-Organization`, data)
+    const response = await axios.put(`https://localhost:44379/api/Organization/Update-Organization`, data)
     // const response = await axiosInstance.put(
     //   `${API_ENDPOINTS_ORG.edit_org}`,
     //   data
@@ -86,7 +86,7 @@ console.log("tempArray------>",tempArray);
 
   const getALLlist = async () => {
     const result = await axios.get(
-      `http://jewcalendar-001-site1.btempurl.com/api/Organization/Get-All-Organization-with-Country`
+      `https://localhost:44379/api/Organization/Get-All-Organization-with-Country`
     );
 
     console.log("listData>>>>", result)
@@ -113,7 +113,7 @@ console.log("tempArray------>",tempArray);
       const queryObj = {
         id: Number(id || 0),
         // countryId: Number(selectedcountries || info.countryId) ,
-        countryId: selectedcountries,
+        countryId:Number(selectedcountries ||  info.countryId) ,
         organizationNameEnglish: values.organizationNameEnglish,
         organizationNamePersian: values.organizationNamePersian,
         organizationAddress: values.organizationAddress,
@@ -122,7 +122,7 @@ console.log("tempArray------>",tempArray);
         email: values.email,
         mobileNo: values.mobileNo,
       };
-      console.log("DataUsdllaa", queryObj);
+      console.log("DataUsdllaa>>>", queryObj);
       if (id) {
         updateOrganisation(queryObj);
       } else {
@@ -148,7 +148,10 @@ console.log("tempArray------>",tempArray);
     }
   }, [info]);
 
-  console.log("VAlues>>>", { values, selectedcountries });
+  console.log("VAlues>>>", { values });
+
+
+  console.log('ShowValue',{ errors, touched}  )
   return (
     <Grid>
       <Paper elevation={0} style={paperStyle}>
@@ -167,7 +170,7 @@ console.log("tempArray------>",tempArray);
             value={values.organizationNameEnglish}
             onChange={handleChange("organizationNameEnglish")}
             error={touched.organizationNameEnglish && Boolean(errors.organizationNameEnglish)}
-            helperText={touched.organizationNameEnglish && errors.organizationNameEnglish}
+            helperText={Boolean(errors.organizationNameEnglish)&& errors.organizationNameEnglish}
           />
 
            <TextField
@@ -175,12 +178,12 @@ console.log("tempArray------>",tempArray);
             sx={{ mt: 3 }}
             id="organizationNamePersian"
             name="organizationNamePersian"
-            label="Organization Nam ePersian "
+            label="Organization NamePersian "
             placeholder="Enter your Organization Name"
             value={values.organizationNamePersian}
             onChange={handleChange("organizationNamePersian")}
             error={touched.organizationNamePersian && Boolean(errors.organizationNamePersian)}
-            helperText={touched.organizationNamePersian && errors.organizationNamePersian}
+            helperText={Boolean(errors.organizationNamePersian) && errors.organizationNamePersian}
           />
 
           <TextField
@@ -193,7 +196,7 @@ console.log("tempArray------>",tempArray);
             value={values.email}
             onChange={handleChange("email")}
             error={touched.email && Boolean(errors.email)}
-            helperText={touched.email && errors.email}
+            helperText={Boolean(errors.email) && errors.email}
           />
           <Box sx={{ minWidth: 120, mt: 3 }}>
             <FormControl fullWidth>
@@ -224,6 +227,8 @@ console.log("tempArray------>",tempArray);
             placeholder="Enter your Organization Address"
             value={values.organizationAddress}
             onChange={handleChange("organizationAddress")}
+            error={touched.organizationAddress && Boolean(errors.organizationAddress)}
+            helperText={Boolean(errors.organizationAddress) && errors.organizationAddress}
           />
 
           <TextField
@@ -236,7 +241,7 @@ console.log("tempArray------>",tempArray);
             value={values.url}
             onChange={handleChange("url")}
             error={touched.url && Boolean(errors.url)}
-            helperText={touched.url && errors.url}
+            helperText={Boolean(errors.url) && errors.url}
           />
           <TextField
             fullWidth
@@ -248,7 +253,7 @@ console.log("tempArray------>",tempArray);
             value={values.contactPerson}
             onChange={handleChange("contactPerson")}
             error={touched.contactPerson && Boolean(errors.contactPerson)}
-            helperText={touched.contactPerson && errors.contactPerson}
+            helperText={Boolean(errors.contactPerson) && errors.contactPerson}
           />
           <TextField
             fullWidth
@@ -260,7 +265,7 @@ console.log("tempArray------>",tempArray);
             value={values.mobileNo}
             onChange={handleChange("mobileNo")}
             error={touched.mobileNo && Boolean(errors.mobileNo)}
-            helperText={touched.mobileNo && errors.mobileNo}
+            helperText={Boolean(errors.mobileNo) && errors.mobileNo}
           />
 
           <Button

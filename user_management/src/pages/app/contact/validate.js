@@ -8,8 +8,8 @@ export const validationSchema = yup.object().shape({
     // website2: yup.string().required("This field is required"),
     // website3:yup.string().required("This field is required"),
     address: yup.string().required("This field is required"),
-    mobileNo: yup.number().required("This field is required"),
-    phone: yup.number().required("This field is required"),
+    // mobileNo: yup.number().required("This field is required"),
+    // phone: yup.number().required("This field is required"),
     email: yup
       .string("Enter your email")
       .email("Enter a valid email")
